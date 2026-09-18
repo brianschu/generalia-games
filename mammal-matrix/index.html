@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mammal Matrix — Scientific Deduction v9</title>
+<title>Mammal Matrix — Question First v14</title>
 <style>
 :root{
   --paper:#f4eddf;--paper-2:#fffaf1;--paper-3:#e8dcc7;--ink:#201d18;--muted:#6b645b;
@@ -214,26 +214,2542 @@ h1{margin:0;font:700 clamp(2rem,3vw,2.85rem)/.96 Georgia,"Times New Roman",serif
   .score-value{font-size:1.95rem}
 }
 
+
+
+/* V12 — QUESTION-FIRST, ONE-SCREEN SPECIMEN RAIL */
+@media (min-width: 900px){
+  html,body{height:100%;overflow:hidden}
+  .campaign-header{position:relative;height:58px;padding:7px 18px}
+  .campaign-inner{height:100%;grid-template-columns:160px minmax(440px,1fr) 230px;gap:12px}
+  .round-step{min-height:38px;padding:5px 7px}.round-step .theme{font-size:.66rem}.round-step .result{display:none}
+  .brand-mini strong{font-size:.96rem}.brand-mini span{font-size:.54rem}
+  .game-shell{height:calc(100vh - 58px);min-height:0;max-width:none;display:grid;grid-template-columns:1fr;grid-template-rows:minmax(310px,42%) minmax(0,58%)}
+  .sidebar{min-height:0;padding:10px 16px;border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:175px 215px minmax(310px,1fr) 145px;grid-template-rows:70px minmax(0,1fr);gap:8px 10px;overflow:hidden;background:color-mix(in srgb,var(--paper-2) 72%,transparent)}
+  .sidebar-intro,.play-loop,.evidence-wrap,.status-grid,.round-title-card p,.score-costs,.score-note,.lab-intro,.identify-note{display:none!important}
+  .round-title-card{grid-column:1;grid-row:1;margin:0;padding:9px 11px 8px 14px;min-width:0}.round-title-card strong{font-size:1rem}.round-title-card span{font-size:.57rem}
+  .score-hero{grid-column:2;grid-row:1;margin:0;padding:8px 10px;border-radius:11px}.score-value{font-size:1.65rem}.score-max{display:none}.score-meter{margin-top:5px}.score-label{font-size:.54rem}
+  .question-budget{grid-column:3;grid-row:1;margin:0;padding:8px 10px;align-self:stretch}.question-budget-head span{font-size:.55rem}.question-bars{margin-top:6px}.question-feedback{display:none}
+  .reset-btn{grid-column:4;grid-row:1;align-self:stretch;margin:0;font-size:.59rem;border-radius:11px}
+  .question-lab{grid-column:1/-1;grid-row:2;min-height:0;margin:0;padding:10px 12px 11px;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto minmax(0,1fr);column-gap:10px;border:2px solid color-mix(in srgb,var(--accent) 52%,var(--line));background:color-mix(in srgb,var(--paper-2) 88%,white)}
+  .question-builder-title{grid-column:1/-1;grid-row:1;margin-bottom:6px}.question-builder-title .panel-title{font:700 1.2rem Georgia,"Times New Roman",serif;text-transform:none;letter-spacing:0;color:var(--ink)}.question-builder-title .panel-title::before{content:"ASK A QUESTION";display:block;font:900 .55rem/1.2 Inter,system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}.question-builder-title .turn-label{font-size:.55rem;padding:4px 8px}
+  .category-tabs{grid-column:1;grid-row:2;display:flex;gap:6px;margin:0 0 7px}.category-tab{flex:0 1 135px;padding:7px 10px;font-size:.62rem;border-radius:999px}
+  .identify-mode-btn{grid-column:2;grid-row:2;margin:0 0 7px;min-width:150px;padding:7px 10px;font-size:.62rem;border-radius:999px}
+  .question-panel{grid-column:1/-1;grid-row:3;min-height:0;padding:9px 11px;display:grid;grid-template-columns:minmax(300px,.9fr) minmax(420px,1.4fr);grid-template-rows:auto minmax(0,1fr);gap:7px 12px;overflow:hidden;background:rgba(255,255,255,.42)}
+  .question-panel-head{grid-column:1;grid-row:1;margin:0}.question-panel-head strong{font-size:.63rem}.question-panel-head span{font-size:.56rem}
+  .option-grid{grid-column:1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;align-content:start;overflow:auto;padding-right:3px}
+  .question-btn{min-height:44px;padding:8px 10px;font-size:.78rem;line-height:1.2;text-align:left}
+  .question-compose{grid-column:2;grid-row:1/3;margin:0;padding:11px 13px;display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line);border-radius:12px;background:var(--paper-2)}
+  .question-compose .compose-label{font-size:.56rem;margin-bottom:5px;color:var(--accent)}
+  .question-bubble{margin:0 0 8px;padding:10px 0;border:0;background:transparent;font:700 clamp(1.35rem,2.2vw,2.15rem)/1.12 Georgia,"Times New Roman",serif;min-height:0;color:var(--ink)}
+  .question-guidance{font-size:.62rem;margin:0 0 8px}.ask-btn{min-height:46px;padding:10px 14px;font-size:.78rem;border-radius:10px}
+
+  .main{min-height:0;padding:8px 14px 10px;display:flex;flex-direction:column;overflow:hidden}
+  .board-head{flex:0 0 auto;margin:0 0 7px;align-items:center}.board-head .eyebrow{display:none}.board-head h2{font-size:1rem}.board-message{font-size:.68rem}.board-side{font-size:.58rem}.matrix-line{display:none}.science-notes{display:none}
+  .mammal-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(8,minmax(128px,1fr));gap:8px;overflow-x:auto;overflow-y:hidden;align-items:stretch;padding:1px 1px 4px;scrollbar-width:thin}
+  .card-wrap,.mammal-card{min-height:0;height:100%;max-height:100%}.card-wrap{min-width:128px}
+  .card-face{height:100%;border-radius:10px}.card-front{padding:0;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--card)}.card-front::before{display:none}.specimen-no{top:6px;left:7px;z-index:3;padding:3px 5px;border-radius:999px;background:rgba(255,255,255,.82);backdrop-filter:blur(4px);font-size:.45rem;color:var(--ink)}
+  .animal-photo{position:absolute;inset:0 0 56px;width:100%;height:calc(100% - 56px);object-fit:cover;object-position:center;background:var(--paper-3)}
+  .photo-shade{position:absolute;left:0;right:0;bottom:50px;height:62px;background:linear-gradient(transparent,rgba(0,0,0,.48));pointer-events:none}
+  .front-label{position:relative;z-index:2;min-height:56px;padding:7px 7px 6px;background:color-mix(in srgb,var(--card) 94%,transparent);border-top:1px solid var(--line)}
+  .card-front h3{font-size:.78rem;line-height:1.05;margin:0 0 2px}.scientific{font-size:.56rem;line-height:1.12}.inspect-hint{display:none}.image-source{position:absolute;z-index:4;right:6px;top:6px;padding:3px 5px;border-radius:999px;background:rgba(20,20,20,.68);color:#fff!important;text-decoration:none;font-size:.43rem;font-weight:900;letter-spacing:.06em}
+  .specimen-mark{display:none}
+  .card-back{padding:7px}.back-head{padding-bottom:4px}.back-code{font-size:.42rem}.card-back h3{font-size:.72rem}.card-back .scientific{font-size:.52rem}.stats{margin-top:4px;gap:2px}.stat-row{font-size:.5rem;line-height:1.15;padding-bottom:2px}.field-note{margin:4px 0;padding:4px 5px;font-size:.46rem;line-height:1.2}.flip-hint{font-size:.44rem}
+}
+@media (max-width:899px){
+  body{overflow:hidden;height:100vh}.campaign-header{position:relative}.game-shell{height:calc(100vh - 116px);min-height:0;display:grid;grid-template-rows:minmax(330px,52%) minmax(0,48%)}
+  .sidebar{min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto minmax(0,1fr);padding:8px;gap:6px;overflow:hidden}.sidebar-intro,.play-loop,.evidence-wrap,.status-grid,.round-title-card p,.lab-intro,.identify-note{display:none!important}.round-title-card{grid-column:1}.score-hero{grid-column:2}.question-budget{grid-column:1/-1}.question-lab{grid-column:1/-1;min-height:0;overflow:auto}.reset-btn{display:none}
+  .main{min-height:0;padding:6px 8px;display:flex;flex-direction:column;overflow:hidden}.board-head{margin:0 0 5px}.board-head h2{font-size:.9rem}.board-side{display:none}.matrix-line,.science-notes{display:none}.mammal-grid{flex:1;display:flex;gap:7px;overflow-x:auto;overflow-y:hidden}.card-wrap{flex:0 0 145px;min-height:0;height:100%}.mammal-card{height:100%;min-height:0}.card-front{padding:0;overflow:hidden}.specimen-mark{display:none}.animal-photo{position:absolute;inset:0 0 60px;width:100%;height:calc(100% - 60px);object-fit:cover}.front-label{position:absolute;left:0;right:0;bottom:0;min-height:60px;padding:8px;background:var(--card);border-top:1px solid var(--line)}.card-front h3{font-size:.82rem}.scientific{font-size:.59rem}.inspect-hint{display:none}.image-source{position:absolute;z-index:4;right:5px;top:5px;padding:3px 5px;border-radius:999px;background:rgba(20,20,20,.7);color:#fff!important;text-decoration:none;font-size:.42rem}.card-back{padding:7px}.stat-row{font-size:.52rem}.field-note{font-size:.48rem}
+}
+
+
+
+/* V12.1 — LAYOUT SAFETY + FULL-ANIMAL IMAGE FIX */
+@media (min-width:900px){
+  html,body{height:100%;overflow:hidden}
+  .campaign-header{height:58px;min-height:58px}
+  .game-shell{
+    height:calc(100vh - 58px);
+    min-height:0;
+    display:grid;
+    grid-template-rows:minmax(0,1fr) clamp(220px,31%,285px);
+    overflow:hidden;
+  }
+  .sidebar{
+    grid-row:1;
+    position:relative;
+    z-index:2;
+    min-height:0;
+    height:auto;
+    overflow:hidden;
+    align-self:stretch;
+  }
+  .question-lab{
+    min-height:0;
+    overflow:hidden;
+  }
+  .question-panel{
+    min-height:0;
+    overflow:hidden;
+  }
+  .option-grid{
+    min-height:0;
+    overflow:auto;
+    overscroll-behavior:contain;
+  }
+  .question-compose{
+    min-height:0;
+    overflow:hidden;
+  }
+  .question-bubble{
+    font-size:clamp(1.45rem,2.25vw,2.35rem);
+    line-height:1.08;
+  }
+  .main{
+    grid-row:2;
+    position:relative;
+    z-index:1;
+    min-height:0;
+    height:auto;
+    overflow:hidden;
+    padding:7px 14px 9px;
+    border-top:1px solid var(--line);
+    background:color-mix(in srgb,var(--paper) 92%,var(--paper-2));
+  }
+  .board-head{
+    flex:0 0 31px;
+    min-height:31px;
+    margin:0 0 5px;
+    overflow:hidden;
+  }
+  .board-head h2{font-size:.94rem;line-height:1.05}
+  .board-message{font-size:.62rem;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mammal-grid{
+    flex:1;
+    min-height:0;
+    height:auto;
+    overflow-x:auto;
+    overflow-y:hidden;
+    align-items:stretch;
+  }
+  .card-wrap,.mammal-card{
+    height:100%;
+    min-height:0;
+    max-height:none;
+  }
+  .card-front{
+    overflow:hidden;
+    background:var(--card);
+  }
+  .animal-photo{
+    position:absolute;
+    inset:8px 7px 59px;
+    width:calc(100% - 14px);
+    height:calc(100% - 67px);
+    object-fit:contain;
+    object-position:center center;
+    padding:4px;
+    background:color-mix(in srgb,var(--paper-3) 48%,white);
+    border-radius:7px;
+  }
+  .photo-shade{display:none}
+  .front-label{
+    min-height:56px;
+    max-height:56px;
+    padding:7px 7px 6px;
+  }
+  .card-front h3{font-size:.76rem;line-height:1.04}
+  .scientific{font-size:.54rem;line-height:1.08}
+}
+
+@media (max-width:899px){
+  html,body{height:100%;overflow:hidden}
+  .game-shell{
+    height:calc(100vh - 116px);
+    min-height:0;
+    grid-template-rows:minmax(0,1fr) minmax(205px,38%);
+    overflow:hidden;
+  }
+  .sidebar{grid-row:1;position:relative;z-index:2;min-height:0;overflow:hidden}
+  .question-lab{min-height:0;overflow:auto;overscroll-behavior:contain}
+  .main{grid-row:2;position:relative;z-index:1;min-height:0;overflow:hidden;border-top:1px solid var(--line)}
+  .mammal-grid{min-height:0;height:100%;overflow-x:auto;overflow-y:hidden}
+  .card-wrap,.mammal-card{height:100%;min-height:0}
+  .animal-photo{
+    position:absolute;
+    inset:7px 6px 63px;
+    width:calc(100% - 12px);
+    height:calc(100% - 70px);
+    object-fit:contain;
+    object-position:center center;
+    padding:3px;
+    background:color-mix(in srgb,var(--paper-3) 48%,white);
+    border-radius:7px;
+  }
+  .photo-shade{display:none}
+}
+
+
+
+/* V14 — QUESTION FIRST / CLEAR INTERACTION HIERARCHY */
+/* Visual language: rounded = interactive; square = informational. */
+.campaign-header,.score-hero,.question-budget,.question-lab,.question-panel,.question-compose,.round-title-card,.status,.evidence-item,.recall-box,.summary-card{border-radius:0!important}
+.question-bubble{border-radius:0!important}
+
+@media (min-width:900px){
+  html,body{height:100%;overflow:hidden}
+
+  /* Quiet top strip: progress + live score only. */
+  .campaign-header{height:42px;min-height:42px;padding:5px 16px;border-bottom:1px solid var(--line);background:var(--header)}
+  .campaign-inner{height:100%;max-width:none;display:grid;grid-template-columns:auto 150px;justify-content:end;gap:16px;align-items:center}
+  .brand-mini{display:none!important}
+  .campaign-score{display:block!important;min-width:0;text-align:right}
+  .campaign-score .score-best{display:none!important}
+  .campaign-score .score-bank{display:flex;align-items:baseline;justify-content:flex-end;gap:7px}
+  .campaign-score span{display:inline;margin:0;font-size:.56rem;letter-spacing:.11em}
+  .campaign-score strong{font-size:1rem}
+  .round-track{display:flex!important;justify-content:flex-end;align-items:center;gap:6px;min-width:0}
+  .round-step{width:36px;height:8px;min-height:8px;padding:0;border-radius:0!important;background:color-mix(in srgb,var(--line) 45%,transparent);border:1px solid var(--line);transform:none!important;overflow:hidden}
+  .round-step .n,.round-step .theme,.round-step .result{display:none!important}
+  .round-step::after{height:100%;bottom:0;background:var(--accent-2)}
+  .round-step.current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+
+  /* True half-screen composition. */
+  .game-shell{height:calc(100vh - 42px);min-height:0;display:grid;grid-template-rows:minmax(0,52%) minmax(0,48%);overflow:hidden}
+
+  /* Question half */
+  .sidebar{grid-row:1;min-height:0;height:auto;padding:10px 16px 9px;display:grid;grid-template-columns:minmax(0,1fr) 260px;grid-template-rows:minmax(0,1fr) 50px;gap:8px 12px;overflow:hidden;border:0;border-bottom:2px solid var(--line);background:color-mix(in srgb,var(--paper-2) 78%,transparent)}
+  .sidebar-intro,.play-loop,.evidence-wrap,.status-grid,.round-title-card,.score-note,.score-costs,.lab-intro,.identify-note,.reset-btn{display:none!important}
+
+  .question-lab{grid-column:1/-1;grid-row:1;min-height:0;margin:0;padding:0 0 8px;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto minmax(0,1fr);gap:8px 12px;border:0!important;background:transparent;overflow:hidden}
+  .question-builder-title{grid-column:1/-1;grid-row:1;margin:0;padding:0;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid var(--ink)}
+  .question-builder-title .panel-title{margin:0!important;padding:0 0 6px;font:800 clamp(2.15rem,4vw,4.2rem)/.88 Georgia,"Times New Roman",serif!important;letter-spacing:-.055em!important;text-transform:uppercase!important;color:var(--ink)!important}
+  .question-builder-title .panel-title::before{display:none!important}
+  .question-builder-title .turn-label{margin-bottom:8px;padding:0;background:none!important;border:0!important;border-radius:0!important;font-size:.58rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+  .category-tabs{grid-column:1;grid-row:2;display:flex;gap:7px;margin:0;align-items:center;overflow-x:auto;padding:1px 0}
+  .category-tab{flex:0 0 auto;min-height:40px;padding:8px 14px;border:1px solid var(--line);border-radius:999px!important;background:transparent;font-size:.68rem;font-weight:900;color:var(--ink);cursor:pointer}
+  .category-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .identify-mode-btn{grid-column:2;grid-row:2;min-height:40px;margin:0;padding:8px 16px;border-radius:999px!important;font-size:.68rem;white-space:nowrap}
+
+  .question-panel{grid-column:1/-1;grid-row:3;min-height:0;padding:0;display:grid;grid-template-columns:minmax(270px,.82fr) minmax(0,1.5fr);grid-template-rows:auto minmax(0,1fr);gap:7px 16px;border:0!important;background:transparent;overflow:hidden}
+  .question-panel-head{grid-column:1;grid-row:1;margin:0;padding:0 0 4px;border-bottom:1px solid var(--line)}
+  .question-panel-head strong{font-size:.62rem;letter-spacing:.13em}
+  .question-panel-head span{display:none}
+  .option-grid{grid-column:1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;align-content:start;overflow:auto;padding:1px 4px 2px 0;overscroll-behavior:contain}
+  .question-btn{min-height:42px;padding:8px 10px;border:1.5px solid var(--line);border-radius:11px!important;background:var(--paper-2);font-size:.78rem;line-height:1.15;text-align:left;cursor:pointer}
+  .question-btn:hover{border-color:var(--accent);background:var(--paper-3)}
+  .question-btn.selected{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);background:var(--paper-3)}
+
+  .question-compose{grid-column:2;grid-row:1/3;min-height:0;margin:0;padding:8px 0 0 16px;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;align-items:center;border:0!important;border-left:1px solid var(--line)!important;background:transparent!important;overflow:hidden}
+  .question-compose .compose-label{margin:0 0 2px;font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+  .question-bubble{align-self:center;min-height:0;margin:0;padding:4px 0 8px;border:0;background:transparent;font:700 clamp(1.65rem,3vw,3.15rem)/1.02 Georgia,"Times New Roman",serif;color:var(--ink)}
+  .question-bubble.placeholder{color:var(--muted);font-size:clamp(1.25rem,2.25vw,2rem)}
+  .question-guidance{margin:0 0 6px;font-size:.62rem;line-height:1.25;color:var(--muted)}
+  .ask-btn{min-height:48px;padding:10px 18px;border-radius:12px!important;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+
+  /* Essential resources only, below the question. */
+  .score-hero{grid-column:1;grid-row:2;display:flex!important;align-items:center;gap:14px;margin:0;padding:5px 10px;border:1px solid var(--line)!important;background:transparent!important;box-shadow:none!important;overflow:hidden}
+  .score-top{display:flex;align-items:baseline;gap:8px;margin:0}
+  .score-label{font-size:.55rem;letter-spacing:.11em}
+  .score-value{font-size:1.35rem;line-height:1}
+  .score-max,.score-meter,.score-delta{display:none!important}
+  .question-budget{grid-column:2;grid-row:2;display:flex!important;flex-direction:column;justify-content:center;margin:0;padding:5px 9px;border:1px solid var(--line)!important;background:transparent!important}
+  .question-budget-head span{font-size:.52rem}.question-budget-head strong{font-size:.68rem}
+  .question-bars{margin-top:5px;gap:3px}.question-bar{height:7px;border-radius:0!important}.question-feedback{display:none!important}
+
+  /* Candidate half — large image-first cards. */
+  .main{grid-row:2;min-height:0;height:auto;padding:7px 12px 10px;display:flex;flex-direction:column;overflow:hidden;background:color-mix(in srgb,var(--paper) 92%,var(--paper-2))}
+  .board-head{flex:0 0 22px;min-height:22px;margin:0 0 5px;display:flex;align-items:center;justify-content:space-between;border:0}
+  .board-head .eyebrow,.board-head h2,.board-side{display:none!important}
+  .board-message{margin:0;font-size:.62rem;line-height:1;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+  .board-message::before{content:"CANDIDATES  ·  ";font-weight:900;color:var(--accent)}
+  .matrix-line,.science-notes{display:none!important}
+  .mammal-grid{flex:1;min-height:0;height:auto;display:grid;grid-template-columns:repeat(8,minmax(150px,1fr));gap:10px;overflow-x:auto;overflow-y:hidden;align-items:stretch;padding:1px 1px 3px;scrollbar-width:thin}
+  .card-wrap{min-width:150px;min-height:0;height:100%;max-height:none}
+  .mammal-card{height:100%;min-height:0}
+  .card-face{height:100%;border-radius:14px!important}
+  .card-front{padding:0;overflow:hidden;background:var(--card)}
+  .animal-photo{position:absolute;inset:8px 7px 66px;width:calc(100% - 14px);height:calc(100% - 74px);object-fit:contain;object-position:center center;padding:3px;background:color-mix(in srgb,var(--paper-3) 42%,white);border-radius:9px}
+  .photo-shade{display:none!important}
+  .front-label{position:absolute;left:0;right:0;bottom:0;min-height:62px;max-height:62px;padding:8px 9px;background:var(--card);border-top:1px solid var(--line);border-radius:0!important}
+  .card-front h3{margin:0 0 3px;font-size:.9rem;line-height:1.02}.scientific{font-size:.61rem;line-height:1.08}
+  .specimen-no{top:6px;left:7px;padding:3px 5px;border-radius:999px!important;background:rgba(255,255,255,.9)}
+  .image-source{top:6px;right:6px;border-radius:999px!important}
+  .card-back{padding:9px}.card-back h3{font-size:.85rem}.stat-row{font-size:.57rem}.field-note{font-size:.52rem;line-height:1.25}
+}
+
+@media (max-width:899px){
+  /* Preserve the interaction-language rule on smaller screens. */
+  .round-title-card,.score-hero,.question-budget,.question-lab,.question-panel,.question-compose,.status,.evidence-item{border-radius:0!important}
+  .category-tab,.question-btn,.ask-btn,.identify-mode-btn,.reset-btn,.modal-btn,.guess-btn,.recall-btn,.card-face{border-radius:10px!important}
+  .question-builder-title .panel-title{font-size:clamp(1.7rem,8vw,2.7rem)!important;text-transform:uppercase;letter-spacing:-.035em}
+  .question-builder-title .panel-title::before{display:none!important}
+}
 </style>
+
+<style id="v15-layout-tuning">
+/* V15 — compact question zone, larger specimen rail */
+@media (min-width: 901px) {
+  .game-shell,
+  .game,
+  .app,
+  .matrix-app {
+    min-height: 0 !important;
+  }
+
+  /* Recover vertical space from the question/control half. */
+  .question-zone,
+  .question-area,
+  .ask-zone,
+  .play-zone,
+  .upper-zone {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    gap: 7px !important;
+  }
+
+  .question-zone h1,
+  .question-zone h2,
+  .question-area h1,
+  .question-area h2,
+  .ask-title,
+  .section-title {
+    margin-top: 0 !important;
+    margin-bottom: 5px !important;
+  }
+
+  .question-builder,
+  .question-panel,
+  .ask-panel,
+  .controls-panel {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    gap: 6px !important;
+  }
+
+  .hud,
+  .score-strip,
+  .resource-strip,
+  .question-meter-wrap {
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+
+  /* Let the cards claim the majority of the available screen. */
+  .candidate-zone,
+  .card-zone,
+  .specimen-zone,
+  .candidate-rail-wrap,
+  .cards-section {
+    min-height: 54vh !important;
+    height: 54vh !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .candidate-rail,
+  .card-rail,
+  .cards-row,
+  .mammal-grid,
+  .specimen-rail {
+    height: 100% !important;
+    min-height: 0 !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .mammal-card,
+  .animal-card,
+  .specimen-card {
+    height: calc(100% - 4px) !important;
+    min-height: 360px !important;
+    width: clamp(190px, 12.3vw, 255px) !important;
+    flex: 0 0 clamp(190px, 12.3vw, 255px) !important;
+  }
+
+  .card-image,
+  .animal-image,
+  .specimen-image,
+  .card-photo,
+  .image-stage {
+    min-height: 0 !important;
+    height: calc(100% - 78px) !important;
+  }
+
+  .card-image img,
+  .animal-image img,
+  .specimen-image img,
+  .card-photo img,
+  .image-stage img,
+  .mammal-card img,
+  .animal-card img,
+  .specimen-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+}
+</style>
+
+
+<style id="v16-design">
+/* V16: question-first hierarchy + compact win state */
+
+@media (min-width:900px){
+  html,body{height:100%;overflow:hidden}
+
+  /* Remove top clutter entirely. */
+  .campaign-header,
+  .sidebar-intro,
+  .round-title-card,
+  .play-loop,
+  .status-grid,
+  .evidence-wrap,
+  .reset-btn,
+  .score-meter,
+  .score-costs,
+  .score-max,
+  .question-feedback,
+  .identify-note{display:none!important}
+
+  .game-shell{
+    height:100vh!important;
+    min-height:0!important;
+    grid-template-rows:minmax(0,43%) minmax(0,57%)!important;
+    overflow:hidden!important;
+  }
+
+  .sidebar{
+    grid-row:1!important;
+    min-height:0!important;
+    padding:8px 14px 6px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 210px 250px!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    gap:12px!important;
+    overflow:hidden!important;
+    align-items:stretch!important;
+  }
+
+  /* Question is first and dominant. */
+  .question-lab{
+    grid-column:1!important;
+    grid-row:1!important;
+    min-width:0!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    padding:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:6px!important;
+  }
+
+  .question-builder-title{
+    display:flex!important;
+    align-items:flex-start!important;
+    justify-content:space-between!important;
+    gap:12px!important;
+    margin:0!important;
+    min-height:0!important;
+  }
+
+  .question-builder-title .panel-title{
+    font:900 clamp(30px,3.1vw,50px)/.95 Inter,system-ui,sans-serif!important;
+    letter-spacing:-.035em!important;
+    color:var(--ink)!important;
+    text-transform:none!important;
+    margin:0!important;
+  }
+  .question-builder-title .panel-title::before{display:none!important}
+
+  .who-subtitle{
+    margin:5px 0 0!important;
+    font:500 clamp(15px,1.15vw,20px)/1.2 Inter,system-ui,sans-serif!important;
+    color:var(--muted)!important;
+  }
+
+  .turn-label{
+    flex:0 0 auto!important;
+    border-radius:0!important;
+    border:1px solid var(--line)!important;
+    background:transparent!important;
+    padding:5px 8px!important;
+    font-size:.58rem!important;
+  }
+
+  .lab-intro{display:none!important}
+
+  .category-tabs{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:6px!important;
+    margin:0!important;
+  }
+  .category-tab{
+    min-height:34px!important;
+    padding:6px 12px!important;
+    font-size:.68rem!important;
+  }
+
+  .question-panel{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(280px,42%)!important;
+    gap:10px!important;
+  }
+
+  .question-panel-head{
+    grid-column:1/-1!important;
+    margin:0!important;
+    min-height:0!important;
+  }
+
+  .option-grid{
+    min-height:0!important;
+    overflow:auto!important;
+    align-content:start!important;
+  }
+
+  .question-compose{
+    min-height:0!important;
+    overflow:hidden!important;
+    padding:8px!important;
+    border-radius:0!important;
+  }
+
+  .question-bubble{
+    font-size:clamp(1.35rem,1.85vw,2rem)!important;
+    line-height:1.08!important;
+    min-height:0!important;
+    padding:4px 0 7px!important;
+  }
+
+  .question-guidance{
+    font-size:.65rem!important;
+    line-height:1.2!important;
+    margin:0 0 6px!important;
+  }
+
+  .ask-btn{
+    min-height:44px!important;
+    font-size:.8rem!important;
+    font-weight:900!important;
+  }
+
+  /* Large identification action. */
+  .identify-mode-btn{
+    min-height:58px!important;
+    width:100%!important;
+    margin:0!important;
+    padding:12px 16px!important;
+    font:900 clamp(16px,1.35vw,22px)/1 Inter,system-ui,sans-serif!important;
+    letter-spacing:.035em!important;
+    border-width:2px!important;
+  }
+
+  /* Separate, non-overlapping informational HUD. */
+  .score-hero,
+  .question-budget{
+    min-width:0!important;
+    width:auto!important;
+    height:auto!important;
+    align-self:start!important;
+    border-radius:0!important;
+    padding:10px!important;
+    overflow:hidden!important;
+    margin:0!important;
+  }
+
+  .score-hero{grid-column:2!important;grid-row:1!important}
+  .question-budget{grid-column:3!important;grid-row:1!important}
+
+  .score-top{
+    display:block!important;
+    min-width:0!important;
+  }
+  .score-label,
+  .question-budget-head span{
+    display:block!important;
+    font-size:.65rem!important;
+    letter-spacing:.08em!important;
+    text-transform:uppercase!important;
+    white-space:normal!important;
+  }
+  .score-value{
+    display:block!important;
+    margin-top:5px!important;
+    font-size:clamp(28px,2.4vw,42px)!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+
+  .question-budget-head{
+    display:flex!important;
+    justify-content:space-between!important;
+    align-items:flex-end!important;
+    gap:8px!important;
+    min-width:0!important;
+  }
+  .question-budget-head strong{
+    font-size:clamp(22px,2vw,32px)!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+  .question-bars{
+    margin-top:10px!important;
+    min-width:0!important;
+  }
+
+  /* Bigger cards remain the lower half. */
+  .main{
+    grid-row:2!important;
+    padding:4px 14px 8px!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  .board-head{flex:0 0 28px!important;margin:0 0 4px!important}
+  .board-head .eyebrow,.board-side{display:none!important}
+  .board-head h2{font-size:.85rem!important;margin:0!important}
+  .board-message{font-size:.6rem!important}
+
+  .mammal-grid{
+    min-height:0!important;
+    height:calc(100% - 32px)!important;
+  }
+  .card-wrap{
+    flex:0 0 clamp(210px,13.4vw,278px)!important;
+    height:100%!important;
+  }
+  .mammal-card{height:100%!important}
+  .animal-photo{
+    object-fit:contain!important;
+    object-position:center!important;
+  }
+
+  /* --- Case resolved --- */
+  .overlay{padding:18px!important}
+  .modal{
+    width:min(1020px,94vw)!important;
+    height:min(650px,88vh)!important;
+    max-height:88vh!important;
+    overflow:hidden!important;
+    border-radius:0!important;
+    display:grid!important;
+    grid-template-rows:minmax(0,1fr) auto!important;
+  }
+
+  .result-layout{
+    min-height:0!important;
+    display:grid!important;
+    grid-template-columns:minmax(280px,38%) minmax(0,1fr)!important;
+    gap:18px!important;
+    padding:16px 18px 8px!important;
+    overflow:hidden!important;
+  }
+
+  .result-visual{
+    min-height:0!important;
+    display:flex!important;
+    align-items:stretch!important;
+  }
+
+  .winner-card{
+    width:100%!important;
+    min-height:0!important;
+    border:1px solid var(--line)!important;
+    border-radius:0!important;
+    background:var(--card)!important;
+    display:grid!important;
+    grid-template-rows:minmax(0,1fr) auto!important;
+    overflow:hidden!important;
+  }
+  .winner-card img{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    object-fit:contain!important;
+    object-position:center!important;
+    padding:10px!important;
+    background:color-mix(in srgb,var(--paper-3) 55%,white)!important;
+  }
+  .winner-name{
+    border-top:1px solid var(--line)!important;
+    padding:10px!important;
+  }
+  .winner-name strong{
+    display:block!important;
+    font-size:1.25rem!important;
+    line-height:1.05!important;
+  }
+  .winner-name span{
+    display:block!important;
+    margin-top:3px!important;
+    font:italic .82rem Georgia,serif!important;
+    color:var(--muted)!important;
+  }
+
+  .modal-scroll{
+    min-height:0!important;
+    overflow:auto!important;
+    padding:0!important;
+  }
+  .result-kicker{font-size:.65rem!important;margin-bottom:4px!important}
+  .modal h2,#resultTitle{
+    font-size:clamp(30px,3vw,48px)!important;
+    line-height:.98!important;
+    margin:0 0 3px!important;
+  }
+  #resultText{margin:0 0 8px!important;font-size:.85rem!important}
+  .resolved-scientific{font:italic .95rem Georgia,serif!important;color:var(--muted)!important}
+
+  .fact-reveal{
+    border-radius:0!important;
+    margin:8px 0!important;
+    padding:10px 12px!important;
+  }
+  .fact-reveal .fact-label{
+    display:block!important;
+    font:900 clamp(20px,1.8vw,28px)/1 Inter,system-ui,sans-serif!important;
+    letter-spacing:-.02em!important;
+    margin-bottom:6px!important;
+  }
+  .fact-reveal p{
+    margin:0!important;
+    font-size:clamp(14px,1.05vw,17px)!important;
+    line-height:1.35!important;
+  }
+
+  .round-score-line{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+    margin:8px 0!important;
+    padding:0!important;
+    border:0!important;
+  }
+  .points-earned,.points-lost{
+    border:1px solid var(--line)!important;
+    border-radius:0!important;
+    padding:9px 10px!important;
+  }
+  .points-earned span,.points-lost span{
+    display:block!important;
+    font-size:.58rem!important;
+    letter-spacing:.08em!important;
+  }
+  .points-earned strong,.points-lost strong{
+    display:block!important;
+    margin-top:3px!important;
+    font-size:1.2rem!important;
+  }
+
+  .recall-box{
+    border-radius:0!important;
+    padding:10px!important;
+    margin-top:8px!important;
+  }
+  .recall-head{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:14px!important;
+    align-items:start!important;
+    margin-bottom:8px!important;
+  }
+  .recall-eyebrow{
+    display:block!important;
+    font-size:.58rem!important;
+    font-weight:900!important;
+    letter-spacing:.1em!important;
+    color:var(--accent)!important;
+  }
+  .recall-head h3{
+    margin:3px 0 0!important;
+    font:600 clamp(14px,1.05vw,17px)/1.3 Inter,system-ui,sans-serif!important;
+  }
+  .recall-reward{
+    border-left:3px solid var(--accent)!important;
+    padding:3px 0 3px 9px!important;
+    font-size:1rem!important;
+    font-weight:900!important;
+    white-space:nowrap!important;
+  }
+  .recall-options{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:6px!important;
+  }
+  .recall-btn{
+    font-weight:500!important;
+    font-size:.78rem!important;
+    line-height:1.25!important;
+    padding:8px 10px!important;
+    text-align:left!important;
+  }
+  .recall-feedback{
+    font-size:.68rem!important;
+    margin-top:6px!important;
+  }
+
+  .modal-footer{
+    padding:9px 18px 12px!important;
+    background:var(--paper)!important;
+    border-top:1px solid var(--line)!important;
+  }
+  .modal-btn{
+    min-height:48px!important;
+    font-size:.9rem!important;
+    font-weight:900!important;
+  }
+}
+</style>
+
+
+<style id="v17-fix">
+@media (min-width:900px){
+  .sidebar{
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:auto minmax(0,1fr)!important;
+    gap:6px!important;
+    padding:6px 14px!important;
+  }
+
+  .compact-hud{
+    grid-row:1!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:18px!important;
+    min-height:34px!important;
+    height:34px!important;
+    padding:0!important;
+    margin:0!important;
+    border-bottom:1px solid var(--line)!important;
+    overflow:hidden!important;
+  }
+
+  .score-hero,
+  .question-budget{
+    display:flex!important;
+    align-items:center!important;
+    gap:8px!important;
+    width:auto!important;
+    min-width:0!important;
+    height:34px!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    background:transparent!important;
+    overflow:visible!important;
+  }
+
+  .score-top,
+  .question-budget-head{
+    display:flex!important;
+    align-items:center!important;
+    gap:7px!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  .score-label,
+  .question-budget-head span{
+    font-size:.58rem!important;
+    line-height:1!important;
+    letter-spacing:.08em!important;
+    text-transform:uppercase!important;
+    white-space:nowrap!important;
+  }
+
+  .score-value,
+  .question-budget-head strong{
+    font-size:1rem!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    margin:0!important;
+  }
+
+  .question-bars{
+    display:flex!important;
+    gap:3px!important;
+    margin:0!important;
+    height:9px!important;
+    align-items:center!important;
+  }
+
+  .question-bar{
+    width:13px!important;
+    height:7px!important;
+  }
+
+  .question-lab{
+    grid-row:2!important;
+    min-height:0!important;
+  }
+
+  .question-builder-title .panel-title{
+    font-size:clamp(28px,2.7vw,44px)!important;
+  }
+
+  .who-subtitle{
+    font-size:clamp(14px,1vw,18px)!important;
+    margin-top:3px!important;
+  }
+
+  .identify-mode-btn{
+    width:auto!important;
+    align-self:flex-start!important;
+    min-height:40px!important;
+    padding:8px 16px!important;
+    margin-top:2px!important;
+    font-size:.8rem!important;
+    letter-spacing:.02em!important;
+    border-width:1.5px!important;
+  }
+
+  .question-panel{
+    grid-template-columns:minmax(0,1fr) minmax(260px,38%)!important;
+    gap:8px!important;
+  }
+
+  .game-shell{
+    grid-template-rows:minmax(0,41%) minmax(0,59%)!important;
+  }
+
+  .main{
+    padding-top:3px!important;
+  }
+
+  .card-wrap{
+    flex-basis:clamp(215px,13.7vw,285px)!important;
+  }
+}
+</style>
+
+
+<style id="v18-authoritative-layout">
+@media (min-width:900px){
+  html,body{
+    width:100%;
+    height:100%;
+    margin:0;
+    overflow:hidden !important;
+  }
+
+  .campaign-header,
+  .sidebar-intro,
+  .round-title-card,
+  .play-loop,
+  .status-grid,
+  .evidence-wrap,
+  .reset-btn,
+  .science-notes,
+  .board-side,
+  .matrix-line,
+  .score-meter,
+  .score-costs,
+  .score-max,
+  .question-feedback,
+  .identify-note,
+  .lab-intro{
+    display:none !important;
+  }
+
+  .game-shell{
+    box-sizing:border-box !important;
+    width:100% !important;
+    height:100vh !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:grid !important;
+    grid-template-rows:42% 58% !important;
+  }
+
+  /* TOP: compact HUD + complete question interface */
+  .sidebar{
+    box-sizing:border-box !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:grid !important;
+    grid-template-rows:30px minmax(0,1fr) !important;
+    grid-template-columns:1fr !important;
+    gap:5px !important;
+    padding:5px 12px 4px !important;
+  }
+
+  .compact-hud{
+    grid-row:1 !important;
+    width:100% !important;
+    height:30px !important;
+    min-height:30px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:22px !important;
+    overflow:hidden !important;
+    border-bottom:1px solid var(--line) !important;
+    padding:0 !important;
+    margin:0 !important;
+  }
+
+  .score-hero,
+  .question-budget{
+    width:auto !important;
+    min-width:0 !important;
+    height:29px !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:7px !important;
+    overflow:hidden !important;
+    border:0 !important;
+    background:transparent !important;
+    padding:0 !important;
+    margin:0 !important;
+    border-radius:0 !important;
+  }
+
+  .score-top,
+  .question-budget-head{
+    display:flex !important;
+    align-items:center !important;
+    gap:6px !important;
+    min-width:0 !important;
+    margin:0 !important;
+  }
+
+  .score-label,
+  .question-budget-head span{
+    font-size:10px !important;
+    line-height:1 !important;
+    letter-spacing:.06em !important;
+    text-transform:uppercase !important;
+    white-space:nowrap !important;
+  }
+
+  .score-value,
+  .question-budget-head strong{
+    margin:0 !important;
+    font-size:15px !important;
+    line-height:1 !important;
+    white-space:nowrap !important;
+  }
+
+  .question-bars{
+    display:flex !important;
+    align-items:center !important;
+    gap:3px !important;
+    height:8px !important;
+    min-width:0 !important;
+    margin:0 !important;
+    overflow:hidden !important;
+  }
+  .question-bar{
+    width:12px !important;
+    min-width:12px !important;
+    height:7px !important;
+    margin:0 !important;
+  }
+
+  .question-lab{
+    grid-row:2 !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    grid-template-rows:auto auto minmax(0,1fr) !important;
+    column-gap:10px !important;
+    row-gap:5px !important;
+    padding:0 !important;
+    margin:0 !important;
+  }
+
+  .question-builder-title{
+    grid-column:1 / 2 !important;
+    grid-row:1 !important;
+    min-width:0 !important;
+    display:flex !important;
+    align-items:flex-start !important;
+    justify-content:space-between !important;
+    gap:8px !important;
+    margin:0 !important;
+  }
+
+  .question-builder-title .panel-title{
+    margin:0 !important;
+    font:900 clamp(27px,2.55vw,42px)/.95 Inter,system-ui,sans-serif !important;
+    letter-spacing:-.035em !important;
+  }
+  .question-builder-title .panel-title::before{display:none !important}
+
+  .who-subtitle{
+    margin:3px 0 0 !important;
+    font:500 clamp(13px,.95vw,17px)/1.15 Inter,system-ui,sans-serif !important;
+  }
+
+  .turn-label{
+    flex:0 0 auto !important;
+    border-radius:0 !important;
+    padding:4px 7px !important;
+    font-size:9px !important;
+  }
+
+  .identify-mode-btn{
+    grid-column:2 !important;
+    grid-row:1 / 3 !important;
+    align-self:center !important;
+    width:auto !important;
+    min-width:145px !important;
+    min-height:40px !important;
+    max-height:44px !important;
+    padding:8px 13px !important;
+    margin:0 !important;
+    font-size:12px !important;
+    line-height:1 !important;
+    font-weight:900 !important;
+    border-width:2px !important;
+  }
+
+  .category-tabs{
+    grid-column:1 !important;
+    grid-row:2 !important;
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:5px !important;
+    width:100% !important;
+    min-width:0 !important;
+    overflow:hidden !important;
+    margin:0 !important;
+  }
+
+  .category-tab{
+    flex:0 1 120px !important;
+    min-width:0 !important;
+    min-height:31px !important;
+    padding:5px 9px !important;
+    font-size:10px !important;
+  }
+
+  .question-panel{
+    grid-column:1 / -1 !important;
+    grid-row:3 !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,58%) minmax(0,42%) !important;
+    grid-template-rows:auto minmax(0,1fr) !important;
+    gap:6px 10px !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  .question-panel-head{
+    grid-column:1 / -1 !important;
+    grid-row:1 !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    font-size:10px !important;
+    line-height:1.1 !important;
+  }
+
+  .option-grid{
+    grid-column:1 !important;
+    grid-row:2 !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    height:100% !important;
+    overflow:hidden !important;
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    grid-auto-rows:minmax(30px,1fr) !important;
+    align-content:stretch !important;
+    gap:5px !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  .question-option{
+    min-width:0 !important;
+    min-height:30px !important;
+    padding:5px 7px !important;
+    font-size:10px !important;
+    line-height:1.1 !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .question-compose{
+    grid-column:2 !important;
+    grid-row:2 !important;
+    width:100% !important;
+    height:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:grid !important;
+    grid-template-rows:auto minmax(0,1fr) auto auto !important;
+    gap:4px !important;
+    padding:7px 8px !important;
+    margin:0 !important;
+    border-radius:0 !important;
+  }
+
+  .compose-label{
+    font-size:9px !important;
+    line-height:1 !important;
+  }
+
+  .question-bubble{
+    min-width:0 !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:flex !important;
+    align-items:center !important;
+    padding:2px 0 !important;
+    margin:0 !important;
+    font-size:clamp(17px,1.55vw,26px) !important;
+    line-height:1.05 !important;
+  }
+
+  .question-guidance{
+    overflow:hidden !important;
+    margin:0 !important;
+    font-size:9px !important;
+    line-height:1.1 !important;
+    white-space:nowrap !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .ask-btn{
+    min-height:34px !important;
+    max-height:38px !important;
+    padding:6px 10px !important;
+    font-size:11px !important;
+    line-height:1 !important;
+  }
+
+  /* BOTTOM: all 8 cards visible at once, no internal scrolling. */
+  .main{
+    box-sizing:border-box !important;
+    grid-row:2 !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    padding:3px 9px 7px !important;
+    display:grid !important;
+    grid-template-rows:24px minmax(0,1fr) !important;
+  }
+
+  .board-head{
+    grid-row:1 !important;
+    width:100% !important;
+    min-height:0 !important;
+    height:24px !important;
+    overflow:hidden !important;
+    margin:0 !important;
+    display:flex !important;
+    align-items:center !important;
+  }
+  .board-head .eyebrow,
+  .board-head h2{display:none !important}
+  .board-message{
+    margin:0 !important;
+    font-size:10px !important;
+    line-height:1 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .mammal-grid{
+    grid-row:2 !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:grid !important;
+    grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+    grid-template-rows:minmax(0,1fr) !important;
+    gap:7px !important;
+    align-items:stretch !important;
+    padding:0 !important;
+    margin:0 !important;
+  }
+
+  .card-wrap{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    height:100% !important;
+    min-height:0 !important;
+    flex:none !important;
+  }
+
+  .mammal-card{
+    width:100% !important;
+    height:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+  }
+
+  .animal-photo{
+    inset:6px 5px 54px !important;
+    width:calc(100% - 10px) !important;
+    height:calc(100% - 60px) !important;
+    object-fit:contain !important;
+    object-position:center !important;
+  }
+
+  .front-label{
+    min-height:51px !important;
+    max-height:51px !important;
+    padding:6px 5px !important;
+  }
+  .card-front h3{
+    font-size:clamp(10px,.78vw,13px) !important;
+    line-height:1.02 !important;
+  }
+  .scientific{
+    font-size:clamp(8px,.56vw,10px) !important;
+    line-height:1.05 !important;
+  }
+}
+
+/* Result modal should also avoid accidental page scroll. */
+.overlay{
+  overflow:hidden !important;
+}
+.modal{
+  max-height:90vh !important;
+  overflow:hidden !important;
+}
+.result-layout{
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+.modal-scroll{
+  min-height:0 !important;
+  overflow:auto !important;
+}
+</style>
+
+
+<style id="v19-style-lab">
+/* ---------- STYLE LAB SWITCHER ---------- */
+.style-switcher{
+  position:fixed; z-index:9998; top:6px; right:8px;
+  display:flex; align-items:center; gap:4px;
+  padding:3px; border:1px solid var(--line,#444);
+  background:var(--paper,#f8f3e8);
+  font-family:Inter,Arial,sans-serif;
+}
+.style-switcher-label{font-size:8px;font-weight:900;letter-spacing:.1em;padding:0 4px}
+.style-btn{
+  min-height:24px; padding:4px 7px; border:1px solid currentColor;
+  border-radius:5px; background:transparent; color:inherit;
+  font:800 9px/1 Inter,Arial,sans-serif; cursor:pointer;
+}
+.style-btn.active{background:var(--ink,#171512);color:var(--paper,#f8f3e8)}
+body[data-style="expedition"] .style-switcher{opacity:.92}
+
+/* ---------- DARK RETRO ---------- */
+body[data-style="dark-retro"]{
+  --paper:#070909; --paper-2:#0b1110; --paper-3:#101615; --card:#090b0b;
+  --ink:#f8f0a1; --muted:#79f0c0; --line:#68e7bb; --accent:#27d8ef;
+  background:#070909!important; color:#f8f0a1!important;
+  font-family:"Courier New",monospace!important;
+}
+body[data-style="dark-retro"] *{box-shadow:none!important}
+body[data-style="dark-retro"] .style-switcher{
+  background:#070909;color:#70f0c1;border:1px solid #70f0c1
+}
+body[data-style="dark-retro"] .style-btn{border-radius:0;color:#70f0c1}
+body[data-style="dark-retro"] .style-btn.active{background:#20d9ef;color:#050707;border-color:#20d9ef}
+body[data-style="dark-retro"] .sidebar,
+body[data-style="dark-retro"] .main{background:#070909!important}
+body[data-style="dark-retro"] .compact-hud{border-color:#70f0c1!important}
+body[data-style="dark-retro"] .question-builder-title .panel-title{
+  color:#25dff2!important;font-family:"Courier New",monospace!important;
+  letter-spacing:.04em!important;text-shadow:2px 0 0 #e52d25!important
+}
+body[data-style="dark-retro"] .who-subtitle,
+body[data-style="dark-retro"] .question-panel-head,
+body[data-style="dark-retro"] .compose-label{color:#70f0c1!important}
+body[data-style="dark-retro"] .category-tab,
+body[data-style="dark-retro"] .question-btn,
+body[data-style="dark-retro"] .question-option,
+body[data-style="dark-retro"] .ask-btn,
+body[data-style="dark-retro"] .identify-mode-btn,
+body[data-style="dark-retro"] .recall-btn,
+body[data-style="dark-retro"] .modal-btn{
+  font-family:"Courier New",monospace!important;border-radius:0!important;
+  border:2px solid #70f0c1!important;background:#090b0b!important;color:#f8f0a1!important;
+}
+body[data-style="dark-retro"] .category-tab.active,
+body[data-style="dark-retro"] .question-btn.selected,
+body[data-style="dark-retro"] .question-option.selected,
+body[data-style="dark-retro"] .identify-mode-btn.active{
+  background:#20d9ef!important;color:#050707!important;border-color:#20d9ef!important
+}
+body[data-style="dark-retro"] .ask-btn{background:#e52d25!important;color:#fff3a0!important;border-color:#ff4b35!important}
+body[data-style="dark-retro"] .question-compose{
+  background:#090b0b!important;border:1px solid #70f0c1!important;border-left:5px solid #20d9ef!important
+}
+body[data-style="dark-retro"] .question-bubble{color:#fff3a0!important;font-family:"Courier New",monospace!important}
+body[data-style="dark-retro"] .question-bar{background:#18302a!important;border:1px solid #70f0c1!important}
+body[data-style="dark-retro"] .question-bar.used,
+body[data-style="dark-retro"] .question-bar.empty{background:#111!important}
+body[data-style="dark-retro"] .mammal-card{border:2px solid #f8f0a1!important;border-radius:0!important;background:#080a0a!important}
+body[data-style="dark-retro"] .card-front,
+body[data-style="dark-retro"] .card-back{background:#080a0a!important;color:#f8f0a1!important}
+body[data-style="dark-retro"] .animal-photo{background:#0c1513!important;border:1px solid #20d9ef!important;border-radius:0!important}
+body[data-style="dark-retro"] .front-label{background:#080a0a!important;border-color:#70f0c1!important}
+body[data-style="dark-retro"] .front-label h3{color:#25dff2!important;font-family:"Courier New",monospace!important}
+body[data-style="dark-retro"] .scientific{color:#70f0c1!important}
+body[data-style="dark-retro"] .stat-row{border-color:#24594b!important}
+body[data-style="dark-retro"] .field-note{background:#101a17!important;border:1px solid #70f0c1!important}
+body[data-style="dark-retro"] .overlay{background:rgba(0,0,0,.88)!important}
+body[data-style="dark-retro"] .modal,
+body[data-style="dark-retro"] .winner-card,
+body[data-style="dark-retro"] .fact-reveal,
+body[data-style="dark-retro"] .recall-box,
+body[data-style="dark-retro"] .points-earned,
+body[data-style="dark-retro"] .points-lost{
+  background:#080a0a!important;color:#f8f0a1!important;border-color:#70f0c1!important
+}
+body[data-style="dark-retro"] .fact-label,
+body[data-style="dark-retro"] .recall-eyebrow{color:#25dff2!important}
+body[data-style="dark-retro"] .winner-card img{background:#0c1513!important}
+body[data-style="dark-retro"] .points-lost strong{color:#ff4b35!important}
+
+/* little schematic line accents */
+body[data-style="dark-retro"] .board-message:before{content:"◉ SIGNAL // ";color:#e52d25}
+body[data-style="dark-retro"] .score-value{color:#25dff2!important}
+
+/* ---------- COMP / VINTAGE COMPUTER ---------- */
+body[data-style="comp"]{
+  --paper:#d8d8d8; --paper-2:#fff; --paper-3:#aef5ee; --card:#fff;
+  --ink:#050505; --muted:#333; --line:#050505; --accent:#00a9c8;
+  background:#18a9c4!important;color:#050505!important;
+  font-family:"Courier New",monospace!important;
+}
+body[data-style="comp"] *{box-shadow:none!important}
+body[data-style="comp"] .style-switcher{
+  background:#fff;color:#000;border:2px solid #000;padding:2px
+}
+body[data-style="comp"] .style-btn{
+  border-radius:0!important;border:1px solid #000!important;background:#fff!important;color:#000!important;
+  font-family:"Courier New",monospace!important
+}
+body[data-style="comp"] .style-btn.active{background:#000!important;color:#fff!important}
+body[data-style="comp"] .sidebar{
+  background:#20a9c4!important;border-bottom:2px solid #000!important
+}
+body[data-style="comp"] .main{background:#8df1df!important}
+body[data-style="comp"] .compact-hud{
+  background:#fff!important;border:2px solid #000!important;height:30px!important;padding:0 7px!important
+}
+body[data-style="comp"] .question-lab{
+  background:#d7d7d7!important;border:2px solid #000!important;padding:5px!important
+}
+body[data-style="comp"] .question-builder-title{
+  border-bottom:2px solid #000!important;background:#fff!important;padding:3px 5px!important
+}
+body[data-style="comp"] .question-builder-title .panel-title{
+  color:#000!important;font-family:"Courier New",monospace!important;letter-spacing:0!important
+}
+body[data-style="comp"] .who-subtitle{color:#000!important}
+body[data-style="comp"] .turn-label{
+  background:#fff!important;color:#000!important;border:1px solid #000!important
+}
+body[data-style="comp"] .category-tabs{background:#aef5ee!important;padding:3px!important;border:1px solid #000!important}
+body[data-style="comp"] .category-tab,
+body[data-style="comp"] .question-btn,
+body[data-style="comp"] .question-option,
+body[data-style="comp"] .ask-btn,
+body[data-style="comp"] .identify-mode-btn,
+body[data-style="comp"] .recall-btn,
+body[data-style="comp"] .modal-btn{
+  border-radius:0!important;border:2px solid #000!important;
+  background:#fff!important;color:#000!important;font-family:"Courier New",monospace!important;
+  border-top-color:#fff!important;border-left-color:#fff!important;border-right-color:#000!important;border-bottom-color:#000!important;
+  outline:1px solid #000;
+}
+body[data-style="comp"] .category-tab.active,
+body[data-style="comp"] .question-btn.selected,
+body[data-style="comp"] .question-option.selected{
+  background:#b4a0ff!important;color:#000!important
+}
+body[data-style="comp"] .identify-mode-btn{background:#ff827e!important}
+body[data-style="comp"] .identify-mode-btn.active{background:#ffdf76!important}
+body[data-style="comp"] .ask-btn{background:#9af0e3!important}
+body[data-style="comp"] .question-panel{background:#d7d7d7!important}
+body[data-style="comp"] .question-panel-head{
+  background:#fff!important;border:1px solid #000!important;padding:2px 5px!important
+}
+body[data-style="comp"] .question-compose{
+  background:#fff!important;border:2px solid #000!important;padding:6px!important
+}
+body[data-style="comp"] .question-bubble{font-family:"Courier New",monospace!important;color:#000!important}
+body[data-style="comp"] .question-bar{border:1px solid #000!important;background:#b4a0ff!important}
+body[data-style="comp"] .mammal-grid{background:#8df1df!important}
+body[data-style="comp"] .mammal-card{
+  border:2px solid #000!important;border-radius:0!important;background:#fff!important
+}
+body[data-style="comp"] .card-front,
+body[data-style="comp"] .card-back{background:#fff!important;color:#000!important}
+body[data-style="comp"] .card-front:before{
+  content:"";position:absolute;z-index:5;left:0;right:0;top:0;height:8px;
+  background:repeating-linear-gradient(to bottom,#000 0 1px,#fff 1px 2px);
+}
+body[data-style="comp"] .animal-photo{
+  background:#baf4ef!important;border:1px solid #000!important;border-radius:0!important
+}
+body[data-style="comp"] .front-label{background:#fff!important;border-color:#000!important}
+body[data-style="comp"] .front-label h3,
+body[data-style="comp"] .scientific{color:#000!important;font-family:"Courier New",monospace!important}
+body[data-style="comp"] .field-note{background:#ffef83!important;border:1px solid #000!important}
+body[data-style="comp"] .overlay{background:rgba(0,0,0,.45)!important}
+body[data-style="comp"] .modal{
+  background:#d8d8d8!important;color:#000!important;border:3px solid #000!important
+}
+body[data-style="comp"] .result-layout{background:#d8d8d8!important}
+body[data-style="comp"] .winner-card{background:#fff!important;border:2px solid #000!important}
+body[data-style="comp"] .winner-card img{background:#aef5ee!important}
+body[data-style="comp"] .fact-reveal{background:#ffef83!important;border:2px solid #000!important}
+body[data-style="comp"] .recall-box{background:#b4a0ff!important;border:2px solid #000!important}
+body[data-style="comp"] .points-earned{background:#aef5ee!important;border:2px solid #000!important}
+body[data-style="comp"] .points-lost{background:#ff827e!important;border:2px solid #000!important}
+body[data-style="comp"] .modal-footer{background:#d8d8d8!important;border-color:#000!important}
+
+/* Never let the switcher change the stable v18 geometry. */
+@media (min-width:900px){
+  body[data-style="dark-retro"] .game-shell,
+  body[data-style="comp"] .game-shell{height:100vh!important;overflow:hidden!important}
+  body[data-style="dark-retro"] .mammal-grid,
+  body[data-style="comp"] .mammal-grid{overflow:hidden!important}
+  body[data-style="dark-retro"] .question-panel,
+  body[data-style="comp"] .question-panel{overflow:hidden!important}
+}
+@media (max-width:899px){
+  .style-switcher{top:3px;right:3px;transform:scale(.88);transform-origin:top right}
+}
+</style>
+
+
+<style id="v20-biome-style-palettes">
+/* =========================================================
+   V20 — biome-aware palettes for Dark Retro + Comp
+   Existing Expedition theme is unchanged.
+   body[data-round-theme] is already driven by the game.
+   ========================================================= */
+
+/* ---------- DARK RETRO: biome variable sets ---------- */
+
+/* Savannah — warm cyan/yellow/red scientific-display palette */
+body[data-style="dark-retro"][data-round-theme="savanna"]{
+  --retro-bg:#070909;
+  --retro-panel:#0b1110;
+  --retro-line:#69efbd;
+  --retro-primary:#27d8ef;
+  --retro-secondary:#f4ee92;
+  --retro-hot:#ef3b2f;
+  --retro-muted:#65cfa7;
+}
+
+/* North America — darker woodland brown + amber + cold mint */
+body[data-style="dark-retro"][data-round-theme="north-america"]{
+  --retro-bg:#0c0906;
+  --retro-panel:#171009;
+  --retro-line:#d3a15f;
+  --retro-primary:#f3b54b;
+  --retro-secondary:#e8d5a6;
+  --retro-hot:#c94b37;
+  --retro-muted:#8fbf9b;
+}
+
+/* Australia — ochre / orange / red / desert-aqua */
+body[data-style="dark-retro"][data-round-theme="australia"]{
+  --retro-bg:#100806;
+  --retro-panel:#1a0e09;
+  --retro-line:#ff9b4a;
+  --retro-primary:#ff7a36;
+  --retro-secondary:#ffd27d;
+  --retro-hot:#e33a28;
+  --retro-muted:#63d7c5;
+}
+
+/* Marine — deep blue / electric cyan / ice mint */
+body[data-style="dark-retro"][data-round-theme="marine"]{
+  --retro-bg:#030812;
+  --retro-panel:#071324;
+  --retro-line:#50d8ff;
+  --retro-primary:#00c9ff;
+  --retro-secondary:#b7f4ff;
+  --retro-hot:#ff5d6c;
+  --retro-muted:#6fe4d0;
+}
+
+/* Global — green / turquoise / pale lime */
+body[data-style="dark-retro"][data-round-theme="global"]{
+  --retro-bg:#05100d;
+  --retro-panel:#0a1914;
+  --retro-line:#58e2bd;
+  --retro-primary:#26d6b5;
+  --retro-secondary:#d7f58b;
+  --retro-hot:#ff7048;
+  --retro-muted:#7bc8a5;
+}
+
+body[data-style="dark-retro"]{
+  background:var(--retro-bg)!important;
+  --paper:var(--retro-bg)!important;
+  --paper-2:var(--retro-panel)!important;
+  --paper-3:color-mix(in srgb,var(--retro-panel) 82%,white)!important;
+  --card:var(--retro-bg)!important;
+  --ink:var(--retro-secondary)!important;
+  --muted:var(--retro-muted)!important;
+  --line:var(--retro-line)!important;
+  --accent:var(--retro-primary)!important;
+}
+
+body[data-style="dark-retro"] .sidebar,
+body[data-style="dark-retro"] .main,
+body[data-style="dark-retro"] .style-switcher,
+body[data-style="dark-retro"] .card-front,
+body[data-style="dark-retro"] .card-back,
+body[data-style="dark-retro"] .question-compose,
+body[data-style="dark-retro"] .modal,
+body[data-style="dark-retro"] .winner-card,
+body[data-style="dark-retro"] .fact-reveal,
+body[data-style="dark-retro"] .recall-box,
+body[data-style="dark-retro"] .points-earned,
+body[data-style="dark-retro"] .points-lost{
+  background:var(--retro-bg)!important;
+  color:var(--retro-secondary)!important;
+  border-color:var(--retro-line)!important;
+}
+
+body[data-style="dark-retro"] .question-builder-title .panel-title,
+body[data-style="dark-retro"] .front-label h3,
+body[data-style="dark-retro"] .fact-label,
+body[data-style="dark-retro"] .recall-eyebrow,
+body[data-style="dark-retro"] .score-value{
+  color:var(--retro-primary)!important;
+}
+
+body[data-style="dark-retro"] .who-subtitle,
+body[data-style="dark-retro"] .question-panel-head,
+body[data-style="dark-retro"] .compose-label,
+body[data-style="dark-retro"] .scientific{
+  color:var(--retro-muted)!important;
+}
+
+body[data-style="dark-retro"] .category-tab,
+body[data-style="dark-retro"] .question-btn,
+body[data-style="dark-retro"] .question-option,
+body[data-style="dark-retro"] .identify-mode-btn,
+body[data-style="dark-retro"] .recall-btn,
+body[data-style="dark-retro"] .modal-btn{
+  border-color:var(--retro-line)!important;
+  color:var(--retro-secondary)!important;
+  background:var(--retro-bg)!important;
+}
+
+body[data-style="dark-retro"] .category-tab.active,
+body[data-style="dark-retro"] .question-btn.selected,
+body[data-style="dark-retro"] .question-option.selected,
+body[data-style="dark-retro"] .identify-mode-btn.active{
+  background:var(--retro-primary)!important;
+  color:var(--retro-bg)!important;
+  border-color:var(--retro-primary)!important;
+}
+
+body[data-style="dark-retro"] .ask-btn{
+  background:var(--retro-hot)!important;
+  color:var(--retro-secondary)!important;
+  border-color:var(--retro-hot)!important;
+}
+
+body[data-style="dark-retro"] .animal-photo{
+  background:var(--retro-panel)!important;
+  border-color:var(--retro-primary)!important;
+}
+
+body[data-style="dark-retro"] .field-note{
+  background:var(--retro-panel)!important;
+  border-color:var(--retro-line)!important;
+}
+
+body[data-style="dark-retro"] .question-bar{
+  background:color-mix(in srgb,var(--retro-line) 26%,var(--retro-bg))!important;
+  border-color:var(--retro-line)!important;
+}
+
+body[data-style="dark-retro"] .question-bar.live{
+  background:var(--retro-primary)!important;
+}
+
+body[data-style="dark-retro"] .points-lost strong{
+  color:var(--retro-hot)!important;
+}
+
+/* ---------- COMP: biome variable sets ---------- */
+
+/* Savannah — warm cream + sand + muted coral */
+body[data-style="comp"][data-round-theme="savanna"]{
+  --comp-desktop:#d9bc72;
+  --comp-panel:#efe6c7;
+  --comp-title:#fff7db;
+  --comp-accent:#f5c55d;
+  --comp-alt:#f08c6f;
+  --comp-pop:#9fd8c8;
+  --comp-card:#fffdf4;
+}
+
+/* North America — woodland tan / olive / rust */
+body[data-style="comp"][data-round-theme="north-america"]{
+  --comp-desktop:#a88663;
+  --comp-panel:#d8c2a3;
+  --comp-title:#efe5d3;
+  --comp-accent:#c79a58;
+  --comp-alt:#b9714d;
+  --comp-pop:#a8c6a0;
+  --comp-card:#f6efe4;
+}
+
+/* Australia — orange / terracotta / warm yellow */
+body[data-style="comp"][data-round-theme="australia"]{
+  --comp-desktop:#e18448;
+  --comp-panel:#f0b57d;
+  --comp-title:#ffe1aa;
+  --comp-accent:#f4a34e;
+  --comp-alt:#e66f4b;
+  --comp-pop:#83d0c5;
+  --comp-card:#fff5e6;
+}
+
+/* Marine — aqua / blue / lavender */
+body[data-style="comp"][data-round-theme="marine"]{
+  --comp-desktop:#2399be;
+  --comp-panel:#94dce9;
+  --comp-title:#d7f7fb;
+  --comp-accent:#58c6df;
+  --comp-alt:#9b94e7;
+  --comp-pop:#7de0c9;
+  --comp-card:#f5feff;
+}
+
+/* Global — turquoise / green / soft violet */
+body[data-style="comp"][data-round-theme="global"]{
+  --comp-desktop:#49aa92;
+  --comp-panel:#a7dac4;
+  --comp-title:#e5f5dd;
+  --comp-accent:#77c9a8;
+  --comp-alt:#9f91d9;
+  --comp-pop:#76d1ce;
+  --comp-card:#f6fff9;
+}
+
+body[data-style="comp"]{
+  background:var(--comp-desktop)!important;
+  --paper:var(--comp-panel)!important;
+  --paper-2:var(--comp-title)!important;
+  --paper-3:var(--comp-pop)!important;
+  --card:var(--comp-card)!important;
+  --ink:#050505!important;
+  --muted:#303030!important;
+  --line:#050505!important;
+  --accent:var(--comp-accent)!important;
+}
+
+body[data-style="comp"] .sidebar{
+  background:var(--comp-desktop)!important;
+}
+
+body[data-style="comp"] .main,
+body[data-style="comp"] .mammal-grid{
+  background:var(--comp-pop)!important;
+}
+
+body[data-style="comp"] .question-lab{
+  background:var(--comp-panel)!important;
+}
+
+body[data-style="comp"] .question-builder-title,
+body[data-style="comp"] .compact-hud,
+body[data-style="comp"] .question-panel-head{
+  background:var(--comp-title)!important;
+}
+
+body[data-style="comp"] .category-tabs{
+  background:var(--comp-pop)!important;
+}
+
+body[data-style="comp"] .category-tab.active,
+body[data-style="comp"] .question-btn.selected,
+body[data-style="comp"] .question-option.selected{
+  background:var(--comp-alt)!important;
+}
+
+body[data-style="comp"] .identify-mode-btn{
+  background:var(--comp-alt)!important;
+}
+
+body[data-style="comp"] .identify-mode-btn.active{
+  background:var(--comp-accent)!important;
+}
+
+body[data-style="comp"] .ask-btn{
+  background:var(--comp-pop)!important;
+}
+
+body[data-style="comp"] .question-compose,
+body[data-style="comp"] .card-front,
+body[data-style="comp"] .card-back,
+body[data-style="comp"] .winner-card{
+  background:var(--comp-card)!important;
+}
+
+body[data-style="comp"] .animal-photo,
+body[data-style="comp"] .winner-card img{
+  background:var(--comp-pop)!important;
+}
+
+body[data-style="comp"] .field-note,
+body[data-style="comp"] .fact-reveal{
+  background:var(--comp-title)!important;
+}
+
+body[data-style="comp"] .recall-box{
+  background:var(--comp-alt)!important;
+}
+
+body[data-style="comp"] .points-earned{
+  background:var(--comp-pop)!important;
+}
+
+body[data-style="comp"] .points-lost{
+  background:var(--comp-alt)!important;
+}
+
+/* Small biome hint in the style switcher itself */
+body[data-style="dark-retro"] .style-switcher{
+  border-color:var(--retro-line)!important;
+}
+body[data-style="dark-retro"] .style-btn.active{
+  background:var(--retro-primary)!important;
+  border-color:var(--retro-primary)!important;
+  color:var(--retro-bg)!important;
+}
+
+body[data-style="comp"] .style-switcher{
+  background:var(--comp-title)!important;
+}
+body[data-style="comp"] .style-btn.active{
+  background:#000!important;
+  color:var(--comp-title)!important;
+}
+</style>
+
+
+<style id="v21-expedition-typography-cardback">
+/* Expedition typography: Generalia house fonts */
+@import url('https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Noto+Serif:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap');
+
+body[data-style="expedition"]{
+  font-family:"Noto Serif", Georgia, serif !important;
+}
+
+body[data-style="expedition"] .question-builder-title .panel-title,
+body[data-style="expedition"] #resultTitle,
+body[data-style="expedition"] .winner-name strong,
+body[data-style="expedition"] .board-head h2,
+body[data-style="expedition"] .front-label h3,
+body[data-style="expedition"] .card-back h3,
+body[data-style="expedition"] .fact-label,
+body[data-style="expedition"] .recall-eyebrow{
+  font-family:"Marcellus SC", Georgia, serif !important;
+  font-weight:400 !important;
+}
+
+body[data-style="expedition"] .who-subtitle,
+body[data-style="expedition"] .question-bubble,
+body[data-style="expedition"] .question-guidance,
+body[data-style="expedition"] .card-back,
+body[data-style="expedition"] .field-note,
+body[data-style="expedition"] .fact-reveal p,
+body[data-style="expedition"] .recall-head h3,
+body[data-style="expedition"] .recall-btn,
+body[data-style="expedition"] #resultText{
+  font-family:"Spectral", Georgia, serif !important;
+}
+
+body[data-style="expedition"] button,
+body[data-style="expedition"] .category-tab,
+body[data-style="expedition"] .question-option,
+body[data-style="expedition"] .score-label,
+body[data-style="expedition"] .question-budget-head,
+body[data-style="expedition"] .compose-label,
+body[data-style="expedition"] .turn-label{
+  font-family:"Noto Serif", Georgia, serif !important;
+}
+
+/* Card backs: larger, calmer, use the whole card instead of bunching at top */
+@media (min-width:900px){
+  body[data-style="expedition"] .card-back{
+    box-sizing:border-box !important;
+    padding:10px 9px 9px !important;
+    display:grid !important;
+    grid-template-rows:auto minmax(0,1fr) auto auto !important;
+    gap:7px !important;
+    overflow:hidden !important;
+  }
+
+  body[data-style="expedition"] .back-head{
+    padding:0 0 7px !important;
+    margin:0 !important;
+    border-bottom:1px solid var(--line) !important;
+  }
+
+  body[data-style="expedition"] .back-code{
+    font-size:clamp(8px,.54vw,10px) !important;
+    line-height:1 !important;
+    margin-bottom:4px !important;
+    letter-spacing:.08em !important;
+  }
+
+  body[data-style="expedition"] .card-back h3{
+    font-size:clamp(14px,1.02vw,18px) !important;
+    line-height:1.05 !important;
+    margin:0 0 3px !important;
+  }
+
+  body[data-style="expedition"] .card-back .scientific{
+    font-family:"Spectral",Georgia,serif !important;
+    font-size:clamp(10px,.67vw,12px) !important;
+    line-height:1.1 !important;
+  }
+
+  body[data-style="expedition"] .stats{
+    min-height:0 !important;
+    display:grid !important;
+    grid-template-rows:repeat(6,minmax(0,1fr)) !important;
+    gap:0 !important;
+    margin:0 !important;
+    align-self:stretch !important;
+  }
+
+  body[data-style="expedition"] .stat-row{
+    min-height:0 !important;
+    display:grid !important;
+    grid-template-columns:42% minmax(0,58%) !important;
+    gap:5px !important;
+    align-items:center !important;
+    padding:4px 0 !important;
+    border-bottom:1px solid color-mix(in srgb,var(--line) 58%,transparent) !important;
+    font-size:clamp(9px,.62vw,11px) !important;
+    line-height:1.15 !important;
+  }
+
+  body[data-style="expedition"] .stat-row span:first-child{
+    font-family:"Noto Serif",Georgia,serif !important;
+    font-weight:700 !important;
+    font-size:.92em !important;
+  }
+
+  body[data-style="expedition"] .stat-row span:last-child{
+    font-family:"Spectral",Georgia,serif !important;
+    font-weight:500 !important;
+    text-align:right !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  body[data-style="expedition"] .field-note{
+    margin:0 !important;
+    padding:7px 8px !important;
+    font-size:clamp(9px,.62vw,11px) !important;
+    line-height:1.25 !important;
+    max-height:none !important;
+    overflow:hidden !important;
+  }
+
+  body[data-style="expedition"] .field-note strong{
+    font-family:"Noto Serif",Georgia,serif !important;
+    font-weight:700 !important;
+  }
+
+  body[data-style="expedition"] .flip-hint{
+    margin:0 !important;
+    padding-top:1px !important;
+    font-family:"Noto Serif",Georgia,serif !important;
+    font-size:8px !important;
+    line-height:1 !important;
+    text-align:center !important;
+    opacity:.65 !important;
+  }
+}
+</style>
+
+
+<style id="v22-all-style-cardback-readability">
+/* V22 — give Dark Retro + Comp the same readable card-back geometry as Expedition,
+   while preserving each skin's own typography, colors, borders and personality. */
+@media (min-width:900px){
+  body[data-style="dark-retro"] .card-back,
+  body[data-style="comp"] .card-back{
+    box-sizing:border-box !important;
+    padding:10px 9px 9px !important;
+    display:grid !important;
+    grid-template-rows:auto minmax(0,1fr) auto auto !important;
+    gap:7px !important;
+    overflow:hidden !important;
+  }
+
+  body[data-style="dark-retro"] .back-head,
+  body[data-style="comp"] .back-head{
+    padding:0 0 7px !important;
+    margin:0 !important;
+    border-bottom:1px solid var(--line) !important;
+  }
+
+  body[data-style="dark-retro"] .back-code,
+  body[data-style="comp"] .back-code{
+    font-size:clamp(8px,.54vw,10px) !important;
+    line-height:1 !important;
+    margin-bottom:4px !important;
+    letter-spacing:.08em !important;
+  }
+
+  body[data-style="dark-retro"] .card-back h3,
+  body[data-style="comp"] .card-back h3{
+    font-size:clamp(14px,1.02vw,18px) !important;
+    line-height:1.05 !important;
+    margin:0 0 3px !important;
+  }
+
+  body[data-style="dark-retro"] .card-back .scientific,
+  body[data-style="comp"] .card-back .scientific{
+    font-size:clamp(10px,.67vw,12px) !important;
+    line-height:1.1 !important;
+  }
+
+  body[data-style="dark-retro"] .stats,
+  body[data-style="comp"] .stats{
+    min-height:0 !important;
+    display:grid !important;
+    grid-template-rows:repeat(6,minmax(0,1fr)) !important;
+    gap:0 !important;
+    margin:0 !important;
+    align-self:stretch !important;
+  }
+
+  body[data-style="dark-retro"] .stat-row,
+  body[data-style="comp"] .stat-row{
+    min-height:0 !important;
+    display:grid !important;
+    grid-template-columns:42% minmax(0,58%) !important;
+    gap:5px !important;
+    align-items:center !important;
+    padding:4px 0 !important;
+    font-size:clamp(9px,.62vw,11px) !important;
+    line-height:1.15 !important;
+  }
+
+  body[data-style="dark-retro"] .stat-row{
+    border-bottom:1px solid color-mix(in srgb,var(--retro-line) 48%,transparent) !important;
+  }
+
+  body[data-style="comp"] .stat-row{
+    border-bottom:1px solid #000 !important;
+  }
+
+  body[data-style="dark-retro"] .stat-row span:first-child,
+  body[data-style="comp"] .stat-row span:first-child{
+    font-weight:700 !important;
+    font-size:.92em !important;
+  }
+
+  body[data-style="dark-retro"] .stat-row span:last-child,
+  body[data-style="comp"] .stat-row span:last-child{
+    font-weight:500 !important;
+    text-align:right !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  body[data-style="dark-retro"] .field-note,
+  body[data-style="comp"] .field-note{
+    margin:0 !important;
+    padding:7px 8px !important;
+    font-size:clamp(9px,.62vw,11px) !important;
+    line-height:1.25 !important;
+    max-height:none !important;
+    overflow:hidden !important;
+  }
+
+  body[data-style="dark-retro"] .field-note strong,
+  body[data-style="comp"] .field-note strong{
+    font-weight:700 !important;
+  }
+
+  body[data-style="dark-retro"] .flip-hint,
+  body[data-style="comp"] .flip-hint{
+    margin:0 !important;
+    padding-top:1px !important;
+    font-size:8px !important;
+    line-height:1 !important;
+    text-align:center !important;
+    opacity:.7 !important;
+  }
+
+  /* Retain the distinctive retro-computer type systems. */
+  body[data-style="dark-retro"] .card-back,
+  body[data-style="dark-retro"] .card-back h3,
+  body[data-style="dark-retro"] .card-back .scientific,
+  body[data-style="dark-retro"] .stat-row,
+  body[data-style="dark-retro"] .field-note,
+  body[data-style="dark-retro"] .flip-hint{
+    font-family:"Courier New",monospace !important;
+  }
+
+  body[data-style="comp"] .card-back,
+  body[data-style="comp"] .card-back h3,
+  body[data-style="comp"] .card-back .scientific,
+  body[data-style="comp"] .stat-row,
+  body[data-style="comp"] .field-note,
+  body[data-style="comp"] .flip-hint{
+    font-family:"Courier New",monospace !important;
+  }
+}
+</style>
+
+
+<style id="v23-cardback-overlap-fix">
+/* Keep all flipped-card content inside the fixed 8-card grid footprint. */
+@media (min-width:900px){
+  .card-wrap,
+  .mammal-card,
+  .card-face,
+  .card-back{
+    min-width:0 !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+    box-sizing:border-box !important;
+  }
+
+  body[data-style="expedition"] .card-back,
+  body[data-style="dark-retro"] .card-back,
+  body[data-style="comp"] .card-back{
+    width:100% !important;
+    height:100% !important;
+    padding:8px 7px 7px !important;
+    gap:5px !important;
+    grid-template-rows:auto minmax(0,1fr) auto auto !important;
+  }
+
+  body[data-style="expedition"] .back-head,
+  body[data-style="dark-retro"] .back-head,
+  body[data-style="comp"] .back-head{
+    min-width:0 !important;
+    overflow:hidden !important;
+    padding-bottom:5px !important;
+  }
+
+  body[data-style="expedition"] .card-back h3,
+  body[data-style="dark-retro"] .card-back h3,
+  body[data-style="comp"] .card-back h3{
+    min-width:0 !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+    font-size:clamp(12px,.82vw,15px) !important;
+  }
+
+  body[data-style="expedition"] .card-back .scientific,
+  body[data-style="dark-retro"] .card-back .scientific,
+  body[data-style="comp"] .card-back .scientific{
+    min-width:0 !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+    font-size:clamp(9px,.58vw,11px) !important;
+  }
+
+  body[data-style="expedition"] .stats,
+  body[data-style="dark-retro"] .stats,
+  body[data-style="comp"] .stats{
+    min-width:0 !important;
+    width:100% !important;
+    overflow:hidden !important;
+  }
+
+  body[data-style="expedition"] .stat-row,
+  body[data-style="dark-retro"] .stat-row,
+  body[data-style="comp"] .stat-row{
+    min-width:0 !important;
+    width:100% !important;
+    grid-template-columns:minmax(0,39%) minmax(0,61%) !important;
+    gap:4px !important;
+    padding:3px 0 !important;
+    font-size:clamp(8px,.53vw,10px) !important;
+    line-height:1.08 !important;
+    overflow:hidden !important;
+  }
+
+  body[data-style="expedition"] .stat-row span,
+  body[data-style="dark-retro"] .stat-row span,
+  body[data-style="comp"] .stat-row span{
+    min-width:0 !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+  }
+
+  body[data-style="expedition"] .stat-row span:last-child,
+  body[data-style="dark-retro"] .stat-row span:last-child,
+  body[data-style="comp"] .stat-row span:last-child{
+    text-align:right !important;
+    overflow-wrap:anywhere !important;
+    word-break:normal !important;
+  }
+
+  body[data-style="expedition"] .field-note,
+  body[data-style="dark-retro"] .field-note,
+  body[data-style="comp"] .field-note{
+    min-width:0 !important;
+    width:100% !important;
+    max-height:64px !important;
+    overflow:hidden !important;
+    padding:6px !important;
+    font-size:clamp(8px,.53vw,10px) !important;
+    line-height:1.16 !important;
+  }
+
+  body[data-style="expedition"] .flip-hint,
+  body[data-style="dark-retro"] .flip-hint,
+  body[data-style="comp"] .flip-hint{
+    min-width:0 !important;
+    overflow:hidden !important;
+    white-space:nowrap !important;
+    text-overflow:ellipsis !important;
+    font-size:7px !important;
+  }
+
+  /* Prevent long retro monospace text from widening the CSS grid column. */
+  body[data-style="dark-retro"] .card-back *,
+  body[data-style="comp"] .card-back *{
+    min-width:0 !important;
+    max-width:100% !important;
+  }
+}
+</style>
+
+
+<style id="v24-question-card-boundary-fix">
+/* V24 — enforce a hard vertical boundary between question UI and card rail. */
+@media (min-width:900px){
+  html,body{
+    height:100% !important;
+    overflow:hidden !important;
+  }
+
+  .game-shell{
+    height:100vh !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:grid !important;
+    grid-template-rows:40% 60% !important;
+  }
+
+  .sidebar{
+    grid-row:1 !important;
+    position:relative !important;
+    z-index:2 !important;
+    min-height:0 !important;
+    height:100% !important;
+    overflow:hidden !important;
+    box-sizing:border-box !important;
+    padding-bottom:4px !important;
+    border-bottom:1px solid var(--line) !important;
+  }
+
+  .compact-hud{
+    flex:0 0 30px !important;
+    height:30px !important;
+    min-height:30px !important;
+  }
+
+  .question-lab{
+    min-height:0 !important;
+    height:calc(100% - 35px) !important;
+    overflow:hidden !important;
+    box-sizing:border-box !important;
+    padding-bottom:2px !important;
+  }
+
+  .question-panel{
+    min-height:0 !important;
+    max-height:100% !important;
+    overflow:hidden !important;
+  }
+
+  .option-grid{
+    min-height:0 !important;
+    overflow:hidden !important;
+  }
+
+  .question-compose{
+    min-height:0 !important;
+    overflow:hidden !important;
+  }
+
+  .question-bubble{
+    max-height:100% !important;
+    overflow:hidden !important;
+  }
+
+  .identify-mode-btn{
+    align-self:center !important;
+    max-height:42px !important;
+  }
+
+  .main{
+    grid-row:2 !important;
+    position:relative !important;
+    z-index:1 !important;
+    min-height:0 !important;
+    height:100% !important;
+    overflow:hidden !important;
+    box-sizing:border-box !important;
+    padding-top:4px !important;
+    background-clip:padding-box !important;
+  }
+
+  .board-head{
+    flex:0 0 22px !important;
+    height:22px !important;
+    min-height:22px !important;
+    overflow:hidden !important;
+  }
+
+  .mammal-grid{
+    height:calc(100% - 24px) !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    position:relative !important;
+    z-index:1 !important;
+  }
+
+  .card-wrap,
+  .mammal-card{
+    min-height:0 !important;
+    max-height:100% !important;
+    overflow:hidden !important;
+  }
+
+  /* Theme-specific panels must not paint past the top region. */
+  body[data-style="dark-retro"] .question-lab,
+  body[data-style="comp"] .question-lab,
+  body[data-style="expedition"] .question-lab{
+    overflow:hidden !important;
+  }
+
+  body[data-style="dark-retro"] .sidebar,
+  body[data-style="comp"] .sidebar,
+  body[data-style="expedition"] .sidebar{
+    overflow:hidden !important;
+  }
+
+  /* Trim vertical padding slightly rather than shrinking cards. */
+  .question-builder-title{
+    margin-bottom:0 !important;
+  }
+
+  .who-subtitle{
+    margin-bottom:2px !important;
+  }
+
+  .category-tabs{
+    margin-bottom:0 !important;
+  }
+
+  .question-panel-head{
+    margin-bottom:0 !important;
+  }
+
+  .question-option{
+    padding-top:4px !important;
+    padding-bottom:4px !important;
+  }
+
+  .question-compose{
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+  }
+
+  .ask-btn{
+    min-height:32px !important;
+    max-height:34px !important;
+  }
+}
+</style>
+
+
+<style id="v25-cardflip-restored">
+/* V25 — keep the question/card boundary, restore full flipped-card contents. */
+@media (min-width:900px){
+  /* Preserve the hard separation from v24. */
+  .game-shell{
+    grid-template-rows:40% 60% !important;
+    overflow:hidden !important;
+  }
+
+  .sidebar,
+  .main{
+    overflow:hidden !important;
+  }
+
+  /* The card rail itself stays contained... */
+  .mammal-grid{
+    overflow:hidden !important;
+    align-items:stretch !important;
+  }
+
+  .card-wrap,
+  .mammal-card{
+    height:100% !important;
+    min-height:0 !important;
+    overflow:visible !important;
+  }
+
+  /* ...but each face can use the entire card footprint. */
+  .mammal-card{
+    position:relative !important;
+    transform-style:preserve-3d !important;
+  }
+
+  .card-face{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+    box-sizing:border-box !important;
+    backface-visibility:hidden !important;
+    overflow:hidden !important;
+  }
+
+  .card-front{
+    transform:rotateY(0deg) !important;
+  }
+
+  .card-back{
+    transform:rotateY(180deg) !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:hidden !important;
+  }
+
+  .card-wrap.flipped .mammal-card{
+    transform:rotateY(180deg) !important;
+  }
+
+  /* Restore readable full-height back layout for all three styles. */
+  body[data-style="expedition"] .card-back,
+  body[data-style="dark-retro"] .card-back,
+  body[data-style="comp"] .card-back{
+    display:grid !important;
+    grid-template-rows:auto minmax(0,1fr) auto auto !important;
+    gap:5px !important;
+    padding:8px 7px 7px !important;
+  }
+
+  body[data-style="expedition"] .stats,
+  body[data-style="dark-retro"] .stats,
+  body[data-style="comp"] .stats{
+    display:grid !important;
+    grid-template-rows:repeat(6,minmax(0,1fr)) !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+  }
+
+  body[data-style="expedition"] .stat-row,
+  body[data-style="dark-retro"] .stat-row,
+  body[data-style="comp"] .stat-row{
+    min-height:0 !important;
+    padding:3px 0 !important;
+    font-size:clamp(8px,.52vw,10px) !important;
+    line-height:1.08 !important;
+  }
+
+  body[data-style="expedition"] .field-note,
+  body[data-style="dark-retro"] .field-note,
+  body[data-style="comp"] .field-note{
+    max-height:72px !important;
+    overflow:hidden !important;
+    padding:6px !important;
+    font-size:clamp(8px,.52vw,10px) !important;
+    line-height:1.16 !important;
+  }
+
+  body[data-style="expedition"] .flip-hint,
+  body[data-style="dark-retro"] .flip-hint,
+  body[data-style="comp"] .flip-hint{
+    display:block !important;
+    margin:0 !important;
+    padding-top:1px !important;
+    font-size:7px !important;
+    line-height:1 !important;
+  }
+
+  /* Ensure front image sizing remains intact. */
+  .animal-photo{
+    object-fit:contain !important;
+    object-position:center !important;
+  }
+}
+</style>
+
 </head>
-<body data-round-theme="savanna">
+<body data-round-theme="savanna" data-style="expedition">
+
+<div class="style-switcher" id="styleSwitcher" aria-label="Design style">
+  <span class="style-switcher-label">STYLE</span>
+  <button type="button" class="style-btn active" data-style="expedition">Expedition</button>
+  <button type="button" class="style-btn" data-style="dark-retro">Dark Retro</button>
+  <button type="button" class="style-btn" data-style="comp">Comp</button>
+</div>
+
 <header class="campaign-header"><div class="campaign-inner"><div class="brand-mini"><strong>Mammal Matrix</strong><span>Scientific deduction</span></div><div class="round-track" id="roundTrack" aria-label="Five round progress"></div><div class="campaign-score"><div class="score-bank"><span>Banked score</span><strong id="headerScore">0</strong></div><div class="score-best"><span>Best expedition</span><strong id="bestScore">—</strong></div></div></div></header>
 <div class="game-shell">
 <aside class="sidebar">
 <header class="sidebar-intro"><p class="eyebrow">Five-round scientific deduction</p><h1>Mammal Matrix</h1><p class="subtitle">Use real biological traits to question the mystery mammal and eliminate every look-alike.</p></header>
 <section class="round-title-card"><span id="roundKicker">Round 1 of 5</span><strong id="roundTheme">African Savanna</strong><p id="roundDescription"></p></section>
 <div class="play-loop" aria-label="How to play"><div class="play-step"><b>1</b><strong>Inspect</strong><span>Flip cards. Research is free.</span></div><div class="play-step"><b>2</b><strong>Ask</strong><span>Use yes/no evidence.</span></div><div class="play-step"><b>3</b><strong>Identify</strong><span>Commit when you're sure.</span></div></div>
-<section class="score-hero" aria-label="Round score"><div class="score-top"><div><span class="score-label">Round score</span><strong class="score-value" id="roundPoints">2,000</strong></div><div class="score-max"><span>Maximum</span><strong>2,000 pts</strong></div></div><div class="score-meter"><div class="score-meter-fill" id="scoreMeter"></div></div><div class="score-costs"><span>Question −125</span><span>Wrong ID −500</span><span class="bonus">Recall +200</span></div><div class="score-delta" id="scoreDelta" aria-hidden="true"></div></section>
-<section class="question-budget" aria-label="Question limit"><div class="question-budget-head"><span>Questions remaining</span><strong id="questionBudgetText">10 / 10</strong></div><div class="question-bars" id="questionBars" aria-hidden="true"></div><div class="question-feedback" id="questionFeedback">Ask fewer questions to keep more of your round score.</div></section>
+<div class="compact-hud"><section class="score-hero" aria-label="Round score"><div class="score-top"><div><span class="score-label">Round score</span><strong class="score-value" id="roundPoints">2,000</strong></div><div class="score-max"><span>Maximum</span><strong>2,000 pts</strong></div></div><div class="score-meter"><div class="score-meter-fill" id="scoreMeter"></div></div><div class="score-costs"><span>Question −125</span><span>Wrong ID −500</span><span class="bonus">Recall +200</span></div><div class="score-delta" id="scoreDelta" aria-hidden="true"></div></section>
+<section class="question-budget" aria-label="Question limit"><div class="question-budget-head"><span>Questions remaining</span><strong id="questionBudgetText">10 / 10</strong></div><div class="question-bars" id="questionBars" aria-hidden="true"></div><div class="question-feedback" id="questionFeedback">Ask fewer questions to keep more of your round score.</div></section></div>
 <section class="status-grid" aria-label="Round status"><div class="status"><span>Candidates</span><strong id="remainingCount">8</strong></div><div class="status"><span>Wrong IDs</span><strong id="wrongCount">0</strong></div></section>
-<section class="question-lab"><div class="question-builder-title"><h2 class="panel-title" style="margin:0">Ask a question</h2><span class="turn-label" id="turnLabel">Start here</span></div><p class="lab-intro" id="actionPrompt">Pick a topic and form one yes/no question. You only spend a turn when you press <strong>Ask Question</strong>.</p><div class="category-tabs" id="categoryTabs"></div><div class="question-panel" id="questionPanel"></div><button class="identify-mode-btn" id="identifyModeBtn" type="button">I know the animal</button><p class="identify-note" id="identifyNote">When your evidence is strong enough, identify one remaining specimen.</p></section>
+<section class="question-lab"><div class="question-builder-title"><div><h2 class="panel-title" style="margin:0">WHO AM I?</h2><p class="who-subtitle">Ask questions to determine which card I am.</p></div><span class="turn-label" id="turnLabel">Start here</span></div><p class="lab-intro" id="actionPrompt">Ask questions to determine which card I am.</p><div class="category-tabs" id="categoryTabs"></div><div class="question-panel" id="questionPanel"></div><button class="identify-mode-btn" id="identifyModeBtn" type="button">I KNOW THIS ANIMAL</button><p class="identify-note" id="identifyNote">Ready to solve it? Make your identification.</p></section>
 <details class="evidence-wrap" id="evidenceDetails"><summary><span>Question history</span><span class="evidence-count" id="evidenceCount">0 asked</span></summary><div class="evidence-log" id="evidenceLog"></div></details>
 <button class="reset-btn" id="resetBtn" type="button">Restart expedition</button>
 </aside>
-<main class="main"><div class="board-head"><div><p class="eyebrow" id="boardEyebrow">Candidate matrix</p><h2 id="boardTitle">African Savanna Candidate Board</h2><p class="board-message" id="boardMessage">All eight mammals are still possible.</p></div><div class="board-side"><span class="board-tip"><b>↻</b> Click a card to inspect its field file</span></div></div><div class="matrix-line"></div><section class="mammal-grid" id="mammalGrid" aria-label="Mammal candidates"></section>
+<main class="main"><div class="board-head"><div><p class="eyebrow" id="boardEyebrow">Candidate matrix</p><h2 id="boardTitle">African Savanna Candidate Board</h2><p class="board-message" id="boardMessage">All eight mammals are still possible.</p></div><div class="board-side"><span class="board-tip"><b>↻</b> Click a card to inspect</span></div></div><div class="matrix-line"></div><section class="mammal-grid" id="mammalGrid" aria-label="Mammal candidates"></section>
 <details class="science-notes"><summary>Science method & sources</summary><div class="science-body"><strong>Taxonomy:</strong> names and higher classification are organized around the American Society of Mammalogists' Mammal Diversity Database v2.5 (released July 28, 2026). <strong>Ecology:</strong> habitat and diet categories are intentionally broad comparison tags, because real mammals often use multiple habitats and varied foods. <strong>Mass:</strong> card values are approximate adult comparison ranges, not universal limits. Marine notes are cross-checked against NOAA Fisheries species accounts; Australian mammal notes against the Australian Museum; general natural-history notes against major museum and zoo references. The game deliberately avoids “top speed” as a required tie-breaker because published speed figures are often gathered under non-comparable conditions. Numerical mass questions only appear where representative adult masses are widely separated, reducing false precision from overlapping body-mass ranges.<br><br><a href="https://www.mammaldiversity.org/" target="_blank" rel="noopener">Mammal Diversity Database</a> · <a href="https://www.fisheries.noaa.gov/species-directory" target="_blank" rel="noopener">NOAA Fisheries</a> · <a href="https://australian.museum/learn/animals/mammals/" target="_blank" rel="noopener">Australian Museum</a> · <a href="https://nationalzoo.si.edu/animals" target="_blank" rel="noopener">Smithsonian's National Zoo</a></div></details></main></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div><div class="answer-flash" id="answerFlash" aria-hidden="true"><span id="answerFlashText">YES</span></div><div class="quality-flash excellent" id="qualityFlash" role="status" aria-live="polite"><strong id="qualityFlashTitle">Excellent question</strong><span id="qualityFlashSub">One of the strongest splits available</span></div><div class="round-curtain" id="roundCurtain" aria-hidden="true"><div class="curtain-inner"><span id="curtainKicker">Round 1</span><strong id="curtainTitle">African Savanna</strong></div></div>
-<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="modal"><div class="modal-scroll"><div class="result-kicker" id="resultKicker">Case resolved</div><h2 id="resultTitle">Round complete</h2><p id="resultText"></p><div class="fact-reveal" id="factReveal"></div><div class="round-score-line" id="roundScoreLine"></div><div id="evidenceRecap"></div><div id="recallArea"></div><div id="summaryArea"></div></div><div class="modal-footer"><button class="modal-btn" id="continueBtn" type="button">Next expedition</button></div></div></div>
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="modal"><div class="result-layout"><div class="result-visual" id="resultVisual" aria-hidden="true"></div><div class="modal-scroll"><div class="result-kicker" id="resultKicker">Case resolved</div><h2 id="resultTitle">Round complete</h2><p id="resultText"></p><div class="fact-reveal" id="factReveal"></div><div class="round-score-line" id="roundScoreLine"></div><div id="evidenceRecap"></div><div id="recallArea"></div><div id="summaryArea"></div></div></div><div class="modal-footer"><button class="modal-btn" id="continueBtn" type="button">Next expedition</button></div></div></div>
 <script>
     const roundDecks = [
       {
@@ -357,9 +2873,53 @@ h1{margin:0;font:700 clamp(2rem,3vw,2.85rem)/.96 Georgia,"Times New Roman",serif
 
     const TOTAL_ROUNDS=5,MAX_QUESTIONS=10,ROUND_MAX_POINTS=2000,QUESTION_COST=125,WRONG_GUESS_PENALTY=500,RECALL_BONUS=200;
     const categoryMeta={Habitat:["Habitat","Where it lives"],Diet:["Diet","What it eats"],Biology:["Biology","Reproduction"],Size:["Mass","Adult body mass"],Taxonomy:["Taxonomy","Optional"]};
+    const PUBLIC_DOMAIN_IMAGES = {
+      "af-cheetah": ["Acinonyx jubatus (1).jpg","https://commons.wikimedia.org/wiki/File:Acinonyx_jubatus_(1).jpg"],
+      "af-lion": ["Panthera leo (male), Zoo Negara.jpg","https://commons.wikimedia.org/wiki/File:Panthera_leo_(male),_Zoo_Negara.jpg"],
+      "af-hyena": ["Crocuta crocuta (1).jpg","https://commons.wikimedia.org/wiki/File:Crocuta_crocuta_(1).jpg"],
+      "af-elephant": ["Loxodonta africana in Tsavo East National Park.jpg","https://commons.wikimedia.org/wiki/File:Loxodonta_africana_in_Tsavo_East_National_Park.jpg"],
+      "af-zebra": ["Adult Zebra.jpg","https://commons.wikimedia.org/wiki/File:Adult_Zebra.jpg"],
+      "af-warthog": ["Facocero Phacochoerus africanus.jpg","https://commons.wikimedia.org/wiki/File:Facocero_Phacochoerus_africanus.jpg"],
+      "af-hippo": ["Hippopotamus Amphibius.jpg","https://commons.wikimedia.org/wiki/File:Hippopotamus_Amphibius.jpg"],
+      "af-aardvark": ["Orycteropus afer afer 78448701.jpg","https://commons.wikimedia.org/wiki/File:Orycteropus_afer_afer_78448701.jpg"],
+      "na-blackbear": ["Ursus americanus.jpg","https://commons.wikimedia.org/wiki/File:Ursus_americanus.jpg"],
+      "na-raccoon": ["Raccoon.jpg","https://commons.wikimedia.org/wiki/File:Raccoon.jpg"],
+      "na-redfox": ["RedFox.png","https://commons.wikimedia.org/wiki/File:RedFox.png"],
+      "na-moose": ["Male Alces alces.jpg","https://commons.wikimedia.org/wiki/File:Male_Alces_alces.jpg"],
+      "na-beaver": ["Castor canadensis - 1700-1880.jpg","https://commons.wikimedia.org/wiki/File:Castor_canadensis_-_1700-1880.jpg"],
+      "na-bobcat": ["Bobcat in dark plants lynx rufus.jpg","https://commons.wikimedia.org/wiki/File:Bobcat_in_dark_plants_lynx_rufus.jpg"],
+      "na-deer": ["Deer in snow odocoileus virginianus.jpg","https://commons.wikimedia.org/wiki/File:Deer_in_snow_odocoileus_virginianus.jpg"],
+      "na-opossum": ["Inaturalist - observations - 34322085 - Virginia opossum.jpg","https://commons.wikimedia.org/wiki/File:Inaturalist_-_observations_-_34322085_-_Virginia_opossum.jpg"],
+      "au-platypus": ["Genera mammalium Ornithorhynchus anatinus.jpg","https://commons.wikimedia.org/wiki/File:Genera_mammalium_Ornithorhynchus_anatinus.jpg"],
+      "au-echidna": ["Tachyglossus aculeatus - Swedish Museum of Natural History - Stockholm, Sweden - DSC00651.JPG","https://commons.wikimedia.org/wiki/File:Tachyglossus_aculeatus_-_Swedish_Museum_of_Natural_History_-_Stockholm,_Sweden_-_DSC00651.JPG"],
+      "au-koala": ["Koala Phascolarctos cinereus.jpg","https://commons.wikimedia.org/wiki/File:Koala_Phascolarctos_cinereus.jpg"],
+      "au-wombat": ["Wombat.jpg","https://commons.wikimedia.org/wiki/File:Wombat.jpg"],
+      "au-kangaroo": ["Eastern Grey Kangaroo & Joey2.jpg","https://commons.wikimedia.org/wiki/File:Eastern_Grey_Kangaroo_%26_Joey2.jpg"],
+      "au-devil": ["ZooParc de Beauval Sarcophilus harrisii 11082019 02 1189.jpg","https://commons.wikimedia.org/wiki/File:ZooParc_de_Beauval_Sarcophilus_harrisii_11082019_02_1189.jpg"],
+      "au-numbat": ["Myrmecobius fasciatus Gould.jpg","https://commons.wikimedia.org/wiki/File:Myrmecobius_fasciatus_Gould.jpg"],
+      "au-possum": ["Common Brushtail Possum (public domain).jpg","https://commons.wikimedia.org/wiki/File:Common_Brushtail_Possum_(public_domain).jpg"],
+      "oc-blue": ["Balaenoptera musculus NOAA.jpg","https://commons.wikimedia.org/wiki/File:Balaenoptera_musculus_NOAA.jpg"],
+      "oc-humpback": ["Megaptera novaeangliae NOAA.jpg","https://commons.wikimedia.org/wiki/File:Megaptera_novaeangliae_NOAA.jpg"],
+      "oc-dolphin": ["Tursiops truncatus.jpg","https://commons.wikimedia.org/wiki/File:Tursiops_truncatus.jpg"],
+      "oc-orca": ["Orcinus orca.jpg","https://commons.wikimedia.org/wiki/File:Orcinus_orca.jpg"],
+      "oc-manatee": ["Trichechus-manatus.jpg","https://commons.wikimedia.org/wiki/File:Trichechus-manatus.jpg"],
+      "oc-walrus": ["Group of walruses odobenus rosmarus.jpg","https://commons.wikimedia.org/wiki/File:Group_of_walruses_odobenus_rosmarus.jpg"],
+      "oc-seal": ["Harbor seal phoca vitulina.jpg","https://commons.wikimedia.org/wiki/File:Harbor_seal_phoca_vitulina.jpg"],
+      "oc-otter": ["Group of sea otters enhydra lutris.jpg","https://commons.wikimedia.org/wiki/File:Group_of_sea_otters_enhydra_lutris.jpg"],
+      "gl-panda": ["Male Giant panda Tuan Tuan (Ailuropoda melanoleuca) at Taipei Zoo (臺北市立動物園 - 木柵動物園), Taiwan (16026193558).jpg","https://commons.wikimedia.org/wiki/File:Male_Giant_panda_Tuan_Tuan_(Ailuropoda_melanoleuca)_at_Taipei_Zoo_(臺北市立動物園_-_木柵動物園),_Taiwan_(16026193558).jpg"],
+      "gl-anteater": ["Myrmecophaga tridactyla - Phoenix Zoo.jpg","https://commons.wikimedia.org/wiki/File:Myrmecophaga_tridactyla_-_Phoenix_Zoo.jpg"],
+      "gl-camel": ["Camelus ferus Bactianus hamburg zoo.JPG","https://commons.wikimedia.org/wiki/File:Camelus_ferus_Bactianus_hamburg_zoo.JPG"],
+      "gl-snowleopard": ["SnowLeopard.jpg","https://commons.wikimedia.org/wiki/File:SnowLeopard.jpg"],
+      "gl-capybara": ["Hydrochoerus hydrochaeris 202512368.jpg","https://commons.wikimedia.org/wiki/File:Hydrochoerus_hydrochaeris_202512368.jpg"],
+      "gl-pangolin": ["Cambridge Natural History Mammalia Fig 109.jpg","https://commons.wikimedia.org/wiki/File:Cambridge_Natural_History_Mammalia_Fig_109.jpg"],
+      "gl-ibex": ["Capra ibex gran paradiso.jpg","https://commons.wikimedia.org/wiki/File:Capra_ibex_gran_paradiso.jpg"],
+      "gl-fennec": ["Vulpes zerda.jpg","https://commons.wikimedia.org/wiki/File:Vulpes_zerda.jpg"]
+    };
+    function pdImageFor(id){const data=PUBLIC_DOMAIN_IMAGES[id];if(!data)return {src:"",source:"#"};return {src:`https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(data[0])}?width=640`,source:data[1]}}
+
     let campaignDecks=[],currentRound=0,currentDeck=null,mysteryMammal=null,cardOrder=[],questionsLeft=MAX_QUESTIONS,wrongGuesses=0,activeIds=new Set(),flippedIds=new Set(),askedIds=new Set(),totalScore=0,roundResults=[],roundOver=false,campaignOver=false,toastTimer=null,qualityTimer=null,activeCategory="Habitat",selectedQuestionId=null,identifyMode=false,evidenceRecords=[],recallAnswered=false,roundBaseEarned=0,lastQuestionFeedback="",lastQuestionsLeft=MAX_QUESTIONS;
     const $=id=>document.getElementById(id);
-    const els={roundTrack:$("roundTrack"),headerScore:$("headerScore"),bestScore:$("bestScore"),roundKicker:$("roundKicker"),roundTheme:$("roundTheme"),roundDescription:$("roundDescription"),questionBudgetText:$("questionBudgetText"),questionBars:$("questionBars"),questionFeedback:$("questionFeedback"),remainingCount:$("remainingCount"),roundPoints:$("roundPoints"),scoreMeter:$("scoreMeter"),scoreDelta:$("scoreDelta"),wrongCount:$("wrongCount"),turnLabel:$("turnLabel"),actionPrompt:$("actionPrompt"),categoryTabs:$("categoryTabs"),questionPanel:$("questionPanel"),identifyModeBtn:$("identifyModeBtn"),identifyNote:$("identifyNote"),evidenceDetails:$("evidenceDetails"),evidenceCount:$("evidenceCount"),evidenceLog:$("evidenceLog"),grid:$("mammalGrid"),boardTitle:$("boardTitle"),boardMessage:$("boardMessage"),resetBtn:$("resetBtn"),overlay:$("overlay"),resultKicker:$("resultKicker"),resultTitle:$("resultTitle"),resultText:$("resultText"),roundScoreLine:$("roundScoreLine"),evidenceRecap:$("evidenceRecap"),recallArea:$("recallArea"),summaryArea:$("summaryArea"),continueBtn:$("continueBtn"),toast:$("toast"),answerFlash:$("answerFlash"),answerFlashText:$("answerFlashText"),qualityFlash:$("qualityFlash"),qualityFlashTitle:$("qualityFlashTitle"),qualityFlashSub:$("qualityFlashSub"),factReveal:$("factReveal"),roundCurtain:$("roundCurtain"),curtainKicker:$("curtainKicker"),curtainTitle:$("curtainTitle")};
+    const els={roundTrack:$("roundTrack"),headerScore:$("headerScore"),bestScore:$("bestScore"),roundKicker:$("roundKicker"),roundTheme:$("roundTheme"),roundDescription:$("roundDescription"),questionBudgetText:$("questionBudgetText"),questionBars:$("questionBars"),questionFeedback:$("questionFeedback"),remainingCount:$("remainingCount"),roundPoints:$("roundPoints"),scoreMeter:$("scoreMeter"),scoreDelta:$("scoreDelta"),wrongCount:$("wrongCount"),turnLabel:$("turnLabel"),actionPrompt:$("actionPrompt"),categoryTabs:$("categoryTabs"),questionPanel:$("questionPanel"),identifyModeBtn:$("identifyModeBtn"),identifyNote:$("identifyNote"),evidenceDetails:$("evidenceDetails"),evidenceCount:$("evidenceCount"),evidenceLog:$("evidenceLog"),grid:$("mammalGrid"),boardTitle:$("boardTitle"),boardMessage:$("boardMessage"),resetBtn:$("resetBtn"),overlay:$("overlay"),resultKicker:$("resultKicker"),resultTitle:$("resultTitle"),resultText:$("resultText"),roundScoreLine:$("roundScoreLine"),evidenceRecap:$("evidenceRecap"),recallArea:$("recallArea"),summaryArea:$("summaryArea"),continueBtn:$("continueBtn"),toast:$("toast"),answerFlash:$("answerFlash"),answerFlashText:$("answerFlashText"),qualityFlash:$("qualityFlash"),qualityFlashTitle:$("qualityFlashTitle"),qualityFlashSub:$("qualityFlashSub"),factReveal:$("factReveal"),resultVisual:$("resultVisual"),roundCurtain:$("roundCurtain"),curtainKicker:$("curtainKicker"),curtainTitle:$("curtainTitle")};
     function shuffle(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
     function escapeHtml(value){return String(value).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
     function initials(name){return name.split(/\s+/).filter(Boolean).slice(0,2).map(v=>v[0]).join("").toUpperCase()}
@@ -390,7 +2950,7 @@ h1{margin:0;font:700 clamp(2rem,3vw,2.85rem)/.96 Georgia,"Times New Roman",serif
       }
       lastQuestionsLeft=questionsLeft;
     }
-    function renderStatus(){els.roundKicker.textContent=`Round ${currentRound+1} of ${TOTAL_ROUNDS}`;els.roundTheme.textContent=currentDeck.theme;els.roundDescription.textContent=currentDeck.description;renderQuestionBudget();els.remainingCount.textContent=activeIds.size;const value=potentialScore();els.roundPoints.textContent=value.toLocaleString();if(els.scoreMeter)els.scoreMeter.style.width=`${Math.max(0,Math.min(100,value/ROUND_MAX_POINTS*100))}%`;els.wrongCount.textContent=wrongGuesses;els.boardTitle.textContent=`${currentDeck.theme} Candidate Matrix`;els.headerScore.textContent=totalScore.toLocaleString();if(activeIds.size===currentDeck.mammals.length)els.boardMessage.textContent=`All ${activeIds.size} mammals are still possible.`;else if(activeIds.size===1)els.boardMessage.textContent="One unique mammal remains — identify it to close the case.";else els.boardMessage.textContent=`${activeIds.size} mammals remain possible.`;if(els.turnLabel)els.turnLabel.textContent=identifyMode?"Identification mode":activeIds.size===1?"Final step":"Ask a question";if(els.actionPrompt)els.actionPrompt.innerHTML=identifyMode?"Choose the one specimen that matches your evidence. A wrong identification costs <strong>500 points</strong>.":activeIds.size===1?"Your questions have left one unique candidate. <strong>Identify it to finish the round.</strong>":"Choose a topic, build a yes/no question, then ask the mystery mammal."}
+    function renderStatus(){els.roundKicker.textContent=`Round ${currentRound+1} of ${TOTAL_ROUNDS}`;els.roundTheme.textContent=currentDeck.theme;els.roundDescription.textContent=currentDeck.description;renderQuestionBudget();els.remainingCount.textContent=activeIds.size;const value=potentialScore();els.roundPoints.textContent=value.toLocaleString();if(els.scoreMeter)els.scoreMeter.style.width=`${Math.max(0,Math.min(100,value/ROUND_MAX_POINTS*100))}%`;els.wrongCount.textContent=wrongGuesses;els.boardTitle.textContent=`${currentDeck.theme} Candidate Matrix`;els.headerScore.textContent=totalScore.toLocaleString();if(activeIds.size===currentDeck.mammals.length)els.boardMessage.textContent=`All ${activeIds.size} mammals are still possible.`;else if(activeIds.size===1)els.boardMessage.textContent="One unique mammal remains — identify it to close the case.";else els.boardMessage.textContent=`${activeIds.size} mammals remain possible.`;if(els.turnLabel)els.turnLabel.textContent=identifyMode?"Identification mode":activeIds.size===1?"Final step":"Ask a question";if(els.actionPrompt)els.actionPrompt.innerHTML=identifyMode?"Choose the one specimen that matches your evidence. A wrong identification costs <strong>500 points</strong>.":activeIds.size===1?"Your questions have left one unique candidate. <strong>Identify it to finish the round.</strong>":"Ask questions to determine which card I am."}
 
     function habitatTags(environment){const e=environment.toLowerCase(),tags=[];const add=(label,pattern)=>{if(pattern.test(e)&&!tags.includes(label))tags.push(label)};add("Savanna",/savanna/);add("Grassland",/grassland/);add("Forest",/forest/);add("Woodland",/woodland/);add("Wetland",/wetland/);add("Freshwater",/freshwater/);add("Riparian",/riparian/);add("Scrub",/scrub/);add("Open country",/open country/);add("Heath",/heath/);add("Marine",/marine/);add("Coastal",/coastal/);add("Sea ice",/sea ice/);add("Desert",/desert/);add("Steppe",/steppe/);add("Alpine",/alpine/);add("Montane",/montane/);add("Urban",/urban/);if(!tags.length)environment.split("/").map(v=>v.trim()).filter(Boolean).forEach(v=>tags.push(v));return tags}
     function formatMassThreshold(value){if(value>=1000){const t=value/1000;return `~${Number.isInteger(t)?t:t.toFixed(1)} t`}if(value<2)return `~${value.toFixed(1)} kg`;if(value<10)return `~${value.toFixed(1).replace(".0","")} kg`;return `~${Math.round(value)} kg`}
@@ -405,11 +2965,11 @@ h1{margin:0;font:700 clamp(2rem,3vw,2.85rem)/.96 Georgia,"Times New Roman",serif
     function celebrateQuestionQuality(level){if(level!=="excellent"&&level!=="good")return;clearTimeout(qualityTimer);const main=document.querySelector(".main");els.qualityFlash.classList.remove("show","excellent","good");main?.classList.remove("best-question-glow","good-question-glow");if(level==="excellent"){els.qualityFlashTitle.textContent="EXCELLENT QUESTION";els.qualityFlashSub.textContent="One of the strongest splits available";els.qualityFlash.classList.add("excellent");main?.classList.add("best-question-glow")}else{els.qualityFlashTitle.textContent="GOOD QUESTION";els.qualityFlashSub.textContent="A strong split of the remaining candidates";els.qualityFlash.classList.add("good");main?.classList.add("good-question-glow")}void els.qualityFlash.offsetWidth;els.qualityFlash.classList.add("show");qualityTimer=setTimeout(()=>{els.qualityFlash.classList.remove("show");main?.classList.remove("best-question-glow","good-question-glow")},2800)}
     function informativeQuestions(){return questionPoolFor(currentDeck).filter(q=>!askedIds.has(q.id)&&questionSplit(q).informative)}
     function visibleQuestions(){const all=questionPoolFor(currentDeck).filter(q=>!askedIds.has(q.id)),nonTax=all.filter(q=>q.category!=="Taxonomy"),tax=all.filter(q=>q.category==="Taxonomy");const informativeTax=tax.filter(q=>questionSplit(q).informative),taxVisible=(informativeTax.length?informativeTax:tax).slice(0,2);return[...nonTax,...taxVisible]}
-    function renderQuestionConsole(){if(roundOver){els.categoryTabs.innerHTML="";els.questionPanel.innerHTML='<div class="question-panel-head"><strong>Case closed</strong><span>Round complete</span></div>';els.identifyModeBtn.disabled=true;return}els.identifyModeBtn.disabled=false;els.identifyModeBtn.classList.toggle("active",identifyMode);els.identifyModeBtn.textContent=identifyMode?"Cancel identification":activeIds.size===1?"Identify final candidate":"I know the animal";els.identifyNote.textContent=identifyMode?"Choose one remaining specimen. An incorrect identification costs 500 points.":activeIds.size===1?"One unique candidate remains. Finish the case.":"When your evidence is strong enough, identify one remaining specimen.";els.grid.classList.toggle("identify-mode",identifyMode);const questions=visibleQuestions(),cats=["Habitat","Diet","Biology","Size","Taxonomy"];if(!questions.some(q=>q.category===activeCategory))activeCategory=cats.find(c=>questions.some(q=>q.category===c))||"Habitat";els.categoryTabs.innerHTML="";cats.forEach(cat=>{const available=questions.some(q=>q.category===cat),btn=document.createElement("button");btn.type="button";btn.className=`category-tab ${cat===activeCategory?"active":""}`;btn.textContent=categoryMeta[cat][0];btn.disabled=!available;btn.addEventListener("click",()=>{activeCategory=cat;selectedQuestionId=null;renderQuestionConsole()});els.categoryTabs.appendChild(btn)});if(activeIds.size>1&&!informativeQuestions().length){els.questionPanel.innerHTML='<div class="question-panel-head"><strong>Validation warning</strong><span>No separating clue remains</span></div>';return}const qs=questions.filter(q=>q.category===activeCategory).sort((a,b)=>activeCategory==="Size"?a.threshold-b.threshold:a.optionLabel.localeCompare(b.optionLabel));const selected=questions.find(q=>q.id===selectedQuestionId)||null;const split=selected?questionSplit(selected):null;els.questionPanel.innerHTML=`<div class="question-panel-head"><strong>${escapeHtml(categoryMeta[activeCategory][0])}</strong><span>${escapeHtml(categoryMeta[activeCategory][1])}</span></div><div class="option-grid"></div><div class="question-compose"><div class="compose-label">Your question</div><div class="question-bubble ${selected?"":"placeholder"}">${selected?escapeHtml(selected.text):"Choose an option above to form a yes/no question."}</div><div class="question-guidance ${selected&&split&&!split.informative?"warning":""}">${selected?(split.informative?"Ready to ask. The answer will become evidence and cost one question.":"This would not distinguish the mammals still on the board. Try another question."):"No clue-strength hints are shown before you ask."}</div><button class="ask-btn" id="askQuestionBtn" type="button" ${!selected||!split||!split.informative?"disabled":""}>Ask question</button></div>`;const grid=els.questionPanel.querySelector(".option-grid");qs.forEach(q=>{const s=questionSplit(q),btn=document.createElement("button");btn.type="button";btn.className=`question-btn question-option ${q.id===selectedQuestionId?"selected":""} ${!s.informative?"non-splitting":""}`;btn.textContent=q.optionLabel;btn.setAttribute("aria-pressed",q.id===selectedQuestionId?"true":"false");btn.addEventListener("click",()=>{selectedQuestionId=q.id;renderQuestionConsole()});grid.appendChild(btn)});els.questionPanel.querySelector("#askQuestionBtn")?.addEventListener("click",()=>{if(!selected)return;const current=questionSplit(selected);if(!current.informative){showToast("That question would not distinguish the remaining mammals.");return}askQuestion(selected)})}
-    function setIdentifyMode(on){if(roundOver)return;identifyMode=!!on;els.identifyModeBtn.classList.toggle("active",identifyMode);els.identifyModeBtn.textContent=identifyMode?"Cancel identification":activeIds.size===1?"Identify final candidate":"I know the animal";els.identifyNote.textContent=identifyMode?"Choose one remaining specimen. An incorrect identification costs 500 points.":activeIds.size===1?"One unique candidate remains. Finish the case.":"When your evidence is strong enough, identify one remaining specimen.";els.grid.classList.toggle("identify-mode",identifyMode);if(identifyMode){selectedQuestionId=null;els.boardMessage.textContent="Identification mode: select the mammal that matches your evidence."}renderStatus()}
+    function renderQuestionConsole(){if(roundOver){els.categoryTabs.innerHTML="";els.questionPanel.innerHTML='<div class="question-panel-head"><strong>Case closed</strong><span>Round complete</span></div>';els.identifyModeBtn.disabled=true;return}els.identifyModeBtn.disabled=false;els.identifyModeBtn.classList.toggle("active",identifyMode);els.identifyModeBtn.textContent=identifyMode?"Cancel identification":activeIds.size===1?"Identify final candidate":"I know this animal";els.identifyNote.textContent=identifyMode?"Choose one remaining specimen. An incorrect identification costs 500 points.":activeIds.size===1?"One unique candidate remains. Finish the case.":"When your evidence is strong enough, identify one remaining specimen.";els.grid.classList.toggle("identify-mode",identifyMode);const questions=visibleQuestions(),cats=["Habitat","Diet","Biology","Size","Taxonomy"];if(!questions.some(q=>q.category===activeCategory))activeCategory=cats.find(c=>questions.some(q=>q.category===c))||"Habitat";els.categoryTabs.innerHTML="";cats.forEach(cat=>{const available=questions.some(q=>q.category===cat),btn=document.createElement("button");btn.type="button";btn.className=`category-tab ${cat===activeCategory?"active":""}`;btn.textContent=categoryMeta[cat][0];btn.disabled=!available;btn.addEventListener("click",()=>{activeCategory=cat;selectedQuestionId=null;renderQuestionConsole()});els.categoryTabs.appendChild(btn)});if(activeIds.size>1&&!informativeQuestions().length){els.questionPanel.innerHTML='<div class="question-panel-head"><strong>Validation warning</strong><span>No separating clue remains</span></div>';return}const qs=questions.filter(q=>q.category===activeCategory).sort((a,b)=>activeCategory==="Size"?a.threshold-b.threshold:a.optionLabel.localeCompare(b.optionLabel));const selected=questions.find(q=>q.id===selectedQuestionId)||null;const split=selected?questionSplit(selected):null;els.questionPanel.innerHTML=`<div class="question-panel-head"><strong>${escapeHtml(categoryMeta[activeCategory][0])}</strong><span>${escapeHtml(categoryMeta[activeCategory][1])}</span></div><div class="option-grid"></div><div class="question-compose"><div class="compose-label">Your question</div><div class="question-bubble ${selected?"":"placeholder"}">${selected?escapeHtml(selected.text):"Choose an option above to form a yes/no question."}</div><div class="question-guidance ${selected&&split&&!split.informative?"warning":""}">${selected?(split.informative?"Ready to ask. The answer will become evidence and cost one question.":"This would not distinguish the mammals still on the board. Try another question."):"No clue-strength hints are shown before you ask."}</div><button class="ask-btn" id="askQuestionBtn" type="button" ${!selected||!split||!split.informative?"disabled":""}>Ask question</button></div>`;const grid=els.questionPanel.querySelector(".option-grid");qs.forEach(q=>{const s=questionSplit(q),btn=document.createElement("button");btn.type="button";btn.className=`question-btn question-option ${q.id===selectedQuestionId?"selected":""} ${!s.informative?"non-splitting":""}`;btn.textContent=q.optionLabel;btn.setAttribute("aria-pressed",q.id===selectedQuestionId?"true":"false");btn.addEventListener("click",()=>{selectedQuestionId=q.id;renderQuestionConsole()});grid.appendChild(btn)});els.questionPanel.querySelector("#askQuestionBtn")?.addEventListener("click",()=>{if(!selected)return;const current=questionSplit(selected);if(!current.informative){showToast("That question would not distinguish the remaining mammals.");return}askQuestion(selected)})}
+    function setIdentifyMode(on){if(roundOver)return;identifyMode=!!on;els.identifyModeBtn.classList.toggle("active",identifyMode);els.grid.classList.toggle("identify-mode",identifyMode);if(identifyMode){selectedQuestionId=null;els.boardMessage.textContent="Identification mode: select the mammal that matches your evidence."}renderStatus();renderQuestionConsole()}
     function renderEvidence(){if(els.evidenceCount)els.evidenceCount.textContent=`${evidenceRecords.length} asked`;if(!evidenceRecords.length){els.evidenceLog.innerHTML='<div class="evidence-item"><span class="evidence-badge yes">START</span><span>A mystery mammal has been selected. Ask a yes/no question to begin.</span><span class="evidence-kill">8 candidates</span></div>';return}els.evidenceLog.innerHTML=evidenceRecords.map(r=>`<div class="evidence-item"><span class="evidence-badge ${r.type}">${r.label}</span><span>${escapeHtml(r.text)}</span><span class="evidence-kill">${escapeHtml(r.meta)}</span></div>`).join("");els.evidenceLog.scrollTop=els.evidenceLog.scrollHeight}
     function specimenNumber(m){return String(currentDeck.mammals.findIndex(x=>x.id===m.id)+1).padStart(2,"0")}
-    function renderCards(deal=false){els.grid.innerHTML="";cardOrder.forEach((mammal,index)=>{const wrap=document.createElement("article");wrap.className="card-wrap";if(deal)wrap.classList.add("deal");wrap.style.setProperty("--deal-delay",`${80+index*70}ms`);wrap.style.setProperty("--deal-tilt",`${index%2?1.6:-1.6}deg`);wrap.dataset.id=mammal.id;wrap.tabIndex=activeIds.has(mammal.id)?0:-1;wrap.setAttribute("role","button");wrap.setAttribute("aria-label",`Inspect ${mammal.name}`);wrap.setAttribute("aria-pressed",flippedIds.has(mammal.id)?"true":"false");if(!activeIds.has(mammal.id))wrap.classList.add("eliminated");if(flippedIds.has(mammal.id))wrap.classList.add("flipped");wrap.innerHTML=`<div class="mammal-card"><section class="card-face card-front" aria-hidden="${flippedIds.has(mammal.id)}"><div class="specimen-no">Specimen ${specimenNumber(mammal)}</div><div class="specimen-mark" aria-hidden="true"><span>${initials(mammal.name)}</span></div><h3>${escapeHtml(mammal.name)}</h3><div class="scientific">${escapeHtml(mammal.scientific)}</div><div class="inspect-hint">Open field file</div></section><section class="card-face card-back" aria-hidden="${!flippedIds.has(mammal.id)}"><div class="back-head"><div><div class="back-code">Specimen ${specimenNumber(mammal)}</div><h3>${escapeHtml(mammal.name)}</h3><div class="scientific">${escapeHtml(mammal.scientific)}</div></div></div><div class="stats"><div class="stat-row"><span>Habitat</span><span>${escapeHtml(mammal.environment)}</span></div><div class="stat-row"><span>Diet</span><span>${escapeHtml(mammal.diet)}</span></div><div class="stat-row"><span>Reproduction</span><span>${escapeHtml(mammal.reproduction)}</span></div><div class="stat-row"><span>Adult mass</span><span>${escapeHtml(mammal.massLabel)}</span></div><div class="stat-row"><span>Order</span><span>${escapeHtml(mammal.order)}</span></div><div class="stat-row"><span>Family</span><span>${escapeHtml(mammal.family)}</span></div></div><div class="field-note"><strong>Field note:</strong> ${escapeHtml(mammal.fact)}</div><div class="flip-hint">Click to close field file</div></section></div>`;wrap.addEventListener("click",()=>{if(identifyMode){makeGuess(mammal);return}toggleCard(mammal.id)});wrap.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();if(identifyMode){makeGuess(mammal);return}toggleCard(mammal.id)}});els.grid.appendChild(wrap)})}
+    function renderCards(deal=false){els.grid.innerHTML="";cardOrder.forEach((mammal,index)=>{const wrap=document.createElement("article");wrap.className="card-wrap";if(deal)wrap.classList.add("deal");wrap.style.setProperty("--deal-delay",`${80+index*70}ms`);wrap.style.setProperty("--deal-tilt",`${index%2?1.6:-1.6}deg`);wrap.dataset.id=mammal.id;wrap.tabIndex=activeIds.has(mammal.id)?0:-1;wrap.setAttribute("role","button");wrap.setAttribute("aria-label",`Inspect ${mammal.name}`);wrap.setAttribute("aria-pressed",flippedIds.has(mammal.id)?"true":"false");if(!activeIds.has(mammal.id))wrap.classList.add("eliminated");if(flippedIds.has(mammal.id))wrap.classList.add("flipped");const photo=pdImageFor(mammal.id);wrap.innerHTML=`<div class="mammal-card"><section class="card-face card-front" aria-hidden="${flippedIds.has(mammal.id)}"><div class="specimen-no">${specimenNumber(mammal)}</div><img class="animal-photo" src="${photo.src}" alt="${escapeHtml(mammal.name)}" loading="lazy" referrerpolicy="no-referrer"><div class="photo-shade"></div><a class="image-source" href="${photo.source}" target="_blank" rel="noopener" title="Public-domain / CC0 image source">PD</a><div class="front-label"><h3>${escapeHtml(mammal.name)}</h3><div class="scientific">${escapeHtml(mammal.scientific)}</div></div></section><section class="card-face card-back" aria-hidden="${!flippedIds.has(mammal.id)}"><div class="back-head"><div><div class="back-code">Specimen ${specimenNumber(mammal)}</div><h3>${escapeHtml(mammal.name)}</h3><div class="scientific">${escapeHtml(mammal.scientific)}</div></div></div><div class="stats"><div class="stat-row"><span>Habitat</span><span>${escapeHtml(mammal.environment)}</span></div><div class="stat-row"><span>Diet</span><span>${escapeHtml(mammal.diet)}</span></div><div class="stat-row"><span>Reproduction</span><span>${escapeHtml(mammal.reproduction)}</span></div><div class="stat-row"><span>Adult mass</span><span>${escapeHtml(mammal.massLabel)}</span></div><div class="stat-row"><span>Order</span><span>${escapeHtml(mammal.order)}</span></div><div class="stat-row"><span>Family</span><span>${escapeHtml(mammal.family)}</span></div></div><div class="field-note"><strong>Field note:</strong> ${escapeHtml(mammal.fact)}</div><div class="flip-hint">Click to close field file</div></section></div>`;wrap.querySelector(".image-source")?.addEventListener("click",e=>e.stopPropagation());wrap.addEventListener("click",()=>{if(identifyMode){makeGuess(mammal);return}toggleCard(mammal.id)});wrap.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();if(identifyMode){makeGuess(mammal);return}toggleCard(mammal.id)}});els.grid.appendChild(wrap)})}
     function toggleCard(id){if(roundOver||!activeIds.has(id))return;const wrap=els.grid.querySelector(`.card-wrap[data-id="${id}"]`);if(!wrap)return;const willFlip=!flippedIds.has(id);willFlip?flippedIds.add(id):flippedIds.delete(id);wrap.classList.toggle("flipped",willFlip);wrap.setAttribute("aria-pressed",willFlip?"true":"false");wrap.querySelector(".card-front")?.setAttribute("aria-hidden",willFlip?"true":"false");wrap.querySelector(".card-back")?.setAttribute("aria-hidden",willFlip?"false":"true")}
     function animateAnswer(answer){els.answerFlash.className=`answer-flash ${answer?"yes":"no"}`;els.answerFlashText.textContent=answer?"YES":"NO";void els.answerFlash.offsetWidth;els.answerFlash.classList.add("show")}
     function updateCardStates(previousIds){const removed=[...previousIds].filter(id=>!activeIds.has(id));removed.forEach((id,i)=>{const wrap=els.grid.querySelector(`.card-wrap[data-id="${id}"]`);if(!wrap)return;setTimeout(()=>{wrap.classList.add("eliminating");setTimeout(()=>{wrap.classList.remove("eliminating");wrap.classList.add("eliminated");wrap.tabIndex=-1},500)},i*55)});[...activeIds].forEach(id=>{const wrap=els.grid.querySelector(`.card-wrap[data-id="${id}"]`);if(wrap){wrap.classList.add("survivor-pulse");setTimeout(()=>wrap.classList.remove("survivor-pulse"),600)}})}
@@ -428,13 +2988,137 @@ h1{margin:0;font:700 clamp(2rem,3vw,2.85rem)/.96 Georgia,"Times New Roman",serif
       return cleaned;
     }
     function makeRecallQuestion(){const others=shuffle(currentDeck.mammals.filter(m=>m.id!==mysteryMammal.id));const correct=recallFactText(mysteryMammal),options=[correct];for(const m of others){const option=recallFactText(m);if(!options.includes(option))options.push(option);if(options.length===3)break}if(options.length<3)return null;return{prompt:"Which different fun fact belongs to the mammal you just identified?",correct,options:shuffle(options)}}
-    function renderRecall(){const q=makeRecallQuestion();if(!q){els.recallArea.innerHTML="";return}els.recallArea.innerHTML=`<div class="recall-box"><div class="label">Fun fact recall · optional +${RECALL_BONUS}</div><h3>${escapeHtml(q.prompt)}</h3><div class="recall-options fact"></div><div class="recall-feedback" aria-live="polite"></div></div>`;const grid=els.recallArea.querySelector(".recall-options"),feedback=els.recallArea.querySelector(".recall-feedback");q.options.forEach(option=>{const b=document.createElement("button");b.type="button";b.className="recall-btn";b.textContent=option;b.addEventListener("click",()=>{if(recallAnswered)return;recallAnswered=true;const correct=option===q.correct;b.classList.add(correct?"correct":"wrong");[...grid.children].forEach(btn=>{btn.disabled=true;if(btn.textContent===q.correct)btn.classList.add("correct")});if(correct){totalScore+=RECALL_BONUS;roundResults[roundResults.length-1].points+=RECALL_BONUS;roundResults[roundResults.length-1].recallBonus=RECALL_BONUS;flashScoreDelta(RECALL_BONUS,"FUN FACT BONUS");feedback.textContent=`Correct — +${RECALL_BONUS} fun-fact bonus.`}else{feedback.textContent="Not this time. The correct fun fact is highlighted in green. No points lost."}els.headerScore.textContent=totalScore.toLocaleString();els.roundScoreLine.textContent=`Round ${currentRound+1}: ${roundResults.at(-1).points.toLocaleString()} points · Expedition ${totalScore.toLocaleString()}`;renderProgress()});grid.appendChild(b)})}
-    function finishRound(won,title,text){if(roundOver)return;roundOver=true;roundBaseEarned=won?potentialScore():0;if(won)totalScore+=roundBaseEarned;roundResults.push({round:currentRound+1,theme:currentDeck.theme,mammal:mysteryMammal.name,won,questionsAsked:MAX_QUESTIONS-questionsLeft,wrongGuesses,points:roundBaseEarned,recallBonus:0});renderProgress();renderStatus();renderQuestionConsole();els.resultKicker.textContent=won?"Case resolved":"Case closed";els.resultTitle.textContent=won?mysteryMammal.name:title;els.resultText.innerHTML=won?`${escapeHtml(text)}<br><strong style="font-family:Georgia,serif;font-style:italic">${escapeHtml(mysteryMammal.scientific)}</strong>`:`${escapeHtml(text)}<br><br><strong>${escapeHtml(mysteryMammal.name)}</strong> · <span style="font-family:Georgia,serif;font-style:italic">${escapeHtml(mysteryMammal.scientific)}</span>`;els.factReveal.innerHTML=won?`<span class="fact-label">Fun fact unlocked</span><p>${escapeHtml(mysteryMammal.fact)}</p>`:"";els.roundScoreLine.textContent=won?`Round ${currentRound+1}: ${roundBaseEarned.toLocaleString()} points · Expedition ${totalScore.toLocaleString()}`:`Round ${currentRound+1}: 0 points · Expedition ${totalScore.toLocaleString()}`;if(won){els.evidenceRecap.innerHTML="";renderRecall()}else{buildEvidenceRecap();els.recallArea.innerHTML="";}if(currentRound>=TOTAL_ROUNDS-1){campaignOver=true;els.continueBtn.textContent="View expedition summary"}else els.continueBtn.textContent=`Begin Round ${currentRound+2}`;els.overlay.classList.add("show")}
-    function showCampaignSummary(){saveBestScore();const solved=roundResults.filter(r=>r.won).length,clean=roundResults.filter(r=>r.won&&r.wrongGuesses===0).length,bonuses=roundResults.reduce((s,r)=>s+(r.recallBonus||0),0);els.resultKicker.textContent="Five rounds complete";els.resultTitle.textContent="Expedition summary";els.resultText.innerHTML=`Solved <strong>${solved} / ${TOTAL_ROUNDS}</strong> cases, made <strong>${clean}</strong> clean deductions, and earned <strong>${bonuses.toLocaleString()}</strong> recall-bonus points.`;els.roundScoreLine.textContent=`Final expedition score · ${totalScore.toLocaleString()} points`;els.evidenceRecap.innerHTML="";els.recallArea.innerHTML="";els.factReveal.innerHTML="";els.summaryArea.innerHTML=`<div class="summary-grid">${roundResults.map(r=>`<div class="summary-row">Round ${r.round} · ${escapeHtml(r.theme)}<strong>${escapeHtml(r.mammal)} · ${r.won?`${r.points.toLocaleString()} pts`:"Unsolved"} · ${r.questionsAsked} Q · ${r.wrongGuesses} wrong</strong></div>`).join("")}</div>`;els.continueBtn.textContent="Play another expedition";els.overlay.classList.add("show")}
+    function renderRecall(){
+      const q=makeRecallQuestion();
+      if(!q){els.recallArea.innerHTML="";return}
+      els.recallArea.innerHTML=`
+        <div class="recall-box">
+          <div class="recall-head">
+            <div>
+              <span class="recall-eyebrow">FIELD RECALL</span>
+              <h3>${escapeHtml(q.prompt)}</h3>
+            </div>
+            <div class="recall-reward">+${RECALL_BONUS} pts</div>
+          </div>
+          <div class="recall-options fact"></div>
+          <div class="recall-feedback" aria-live="polite"></div>
+        </div>`;
+      const grid=els.recallArea.querySelector(".recall-options"),
+            feedback=els.recallArea.querySelector(".recall-feedback");
+      q.options.forEach(option=>{
+        const b=document.createElement("button");
+        b.type="button";
+        b.className="recall-btn";
+        b.textContent=option;
+        b.addEventListener("click",()=>{
+          if(recallAnswered)return;
+          recallAnswered=true;
+          const correct=option===q.correct;
+          b.classList.add(correct?"correct":"wrong");
+          [...grid.children].forEach(btn=>{
+            btn.disabled=true;
+            if(btn.textContent===q.correct)btn.classList.add("correct")
+          });
+          if(correct){
+            totalScore+=RECALL_BONUS;
+            roundResults[roundResults.length-1].points+=RECALL_BONUS;
+            roundResults[roundResults.length-1].recallBonus=RECALL_BONUS;
+            flashScoreDelta(RECALL_BONUS,"FUN FACT BONUS");
+            feedback.textContent=`Correct — +${RECALL_BONUS} points.`
+          }else{
+            feedback.textContent="Not this time. The correct fun fact is highlighted. No points lost."
+          }
+          els.headerScore.textContent=totalScore.toLocaleString();
+          const rr=roundResults.at(-1);
+          const base=rr.points-(rr.recallBonus||0);
+          const lost=Math.max(0,ROUND_MAX_POINTS-base);
+          els.roundScoreLine.innerHTML=`<div class="points-earned"><span>ROUND POINTS</span><strong>${rr.points.toLocaleString()} pts</strong></div><div class="points-lost"><span>POINTS LOST</span><strong>${lost.toLocaleString()} pts</strong></div>`;
+          renderProgress()
+        });
+        grid.appendChild(b)
+      })
+    }
+    function finishRound(won,title,text){
+      if(roundOver)return;
+      roundOver=true;
+      roundBaseEarned=won?potentialScore():0;
+      if(won)totalScore+=roundBaseEarned;
+      roundResults.push({
+        round:currentRound+1,
+        theme:currentDeck.theme,
+        mammal:mysteryMammal.name,
+        won,
+        questionsAsked:MAX_QUESTIONS-questionsLeft,
+        wrongGuesses,
+        points:roundBaseEarned,
+        recallBonus:0
+      });
+      renderProgress();
+      renderStatus();
+      renderQuestionConsole();
+
+      els.resultKicker.textContent=won?"YOU WON · CASE RESOLVED":"CASE CLOSED";
+      els.resultTitle.textContent=won?mysteryMammal.name:title;
+      els.resultText.innerHTML=won
+        ? `<span class="resolved-scientific">${escapeHtml(mysteryMammal.scientific)}</span>`
+        : `${escapeHtml(text)}<br><br><strong>${escapeHtml(mysteryMammal.name)}</strong> · <span class="resolved-scientific">${escapeHtml(mysteryMammal.scientific)}</span>`;
+
+      if(won){
+        const img=pdImageFor(mysteryMammal.id);
+        els.resultVisual.innerHTML=`<div class="winner-card"><img src="${escapeHtml(img.src)}" alt="${escapeHtml(mysteryMammal.name)}"><div class="winner-name"><strong>${escapeHtml(mysteryMammal.name)}</strong><span>${escapeHtml(mysteryMammal.scientific)}</span></div></div>`;
+      }else{
+        els.resultVisual.innerHTML="";
+      }
+
+      els.factReveal.innerHTML=won
+        ? `<span class="fact-label">FUN FACT UNLOCKED</span><p>${escapeHtml(mysteryMammal.fact)}</p>`
+        : "";
+
+      const lost=won?Math.max(0,ROUND_MAX_POINTS-roundBaseEarned):ROUND_MAX_POINTS;
+      els.roundScoreLine.innerHTML=won
+        ? `<div class="points-earned"><span>ROUND POINTS</span><strong>${roundBaseEarned.toLocaleString()} pts</strong></div><div class="points-lost"><span>POINTS LOST</span><strong>${lost.toLocaleString()} pts</strong></div>`
+        : `<div class="points-earned"><span>ROUND POINTS</span><strong>0 pts</strong></div><div class="points-lost"><span>POINTS LOST</span><strong>${ROUND_MAX_POINTS.toLocaleString()} pts</strong></div>`;
+
+      if(won){
+        els.evidenceRecap.innerHTML="";
+        renderRecall()
+      }else{
+        buildEvidenceRecap();
+        els.recallArea.innerHTML=""
+      }
+
+      if(currentRound>=TOTAL_ROUNDS-1){
+        campaignOver=true;
+        els.continueBtn.textContent="View expedition summary"
+      }else{
+        els.continueBtn.textContent=`Begin Round ${currentRound+2}`
+      }
+      els.overlay.classList.add("show")
+    }
+    function showCampaignSummary(){saveBestScore();if(els.resultVisual)els.resultVisual.innerHTML="";const solved=roundResults.filter(r=>r.won).length,clean=roundResults.filter(r=>r.won&&r.wrongGuesses===0).length,bonuses=roundResults.reduce((s,r)=>s+(r.recallBonus||0),0);els.resultKicker.textContent="Five rounds complete";els.resultTitle.textContent="Expedition summary";els.resultText.innerHTML=`Solved <strong>${solved} / ${TOTAL_ROUNDS}</strong> cases, made <strong>${clean}</strong> clean deductions, and earned <strong>${bonuses.toLocaleString()}</strong> recall-bonus points.`;els.roundScoreLine.textContent=`Final expedition score · ${totalScore.toLocaleString()} points`;els.evidenceRecap.innerHTML="";els.recallArea.innerHTML="";els.factReveal.innerHTML="";els.summaryArea.innerHTML=`<div class="summary-grid">${roundResults.map(r=>`<div class="summary-row">Round ${r.round} · ${escapeHtml(r.theme)}<strong>${escapeHtml(r.mammal)} · ${r.won?`${r.points.toLocaleString()} pts`:"Unsolved"} · ${r.questionsAsked} Q · ${r.wrongGuesses} wrong</strong></div>`).join("")}</div>`;els.continueBtn.textContent="Play another expedition";els.overlay.classList.add("show")}
     function continueGame(){if(campaignOver){if(els.continueBtn.textContent==="View expedition summary"){showCampaignSummary();return}startCampaign();return}currentRound++;startRound(true)}
     function showToast(message){clearTimeout(toastTimer);els.toast.textContent=message;els.toast.classList.add("show");toastTimer=setTimeout(()=>els.toast.classList.remove("show"),1400)}
     function validateDecks(){const errors=[],allIds=new Set();roundDecks.forEach((deck,di)=>{if(deck.mammals.length!==8)errors.push(`${deck.theme}: expected 8 mammals`);deck.mammals.forEach(m=>{if(allIds.has(m.id))errors.push(`Duplicate id ${m.id}`);allIds.add(m.id)});const pool=questionPoolFor(deck);const n=deck.mammals.length;for(let mask=1;mask<(1<<n);mask++){const subset=deck.mammals.filter((_,i)=>mask&(1<<i));if(subset.length<2)continue;const canSplit=pool.some(q=>{let y=0;subset.forEach(m=>{if(q.test(m))y++});return y>0&&y<subset.length});if(!canSplit)errors.push(`${deck.theme}: unsplittable subset ${subset.map(m=>m.name).join(", ")}`)}});if(errors.length){console.error("Mammal Matrix validation errors",errors)}else console.info(`Mammal Matrix validated: ${allIds.size} mammals; every multi-candidate subset has a separating question.`);return errors.length===0}
     els.resetBtn.addEventListener("click",startCampaign);els.identifyModeBtn.addEventListener("click",()=>setIdentifyMode(!identifyMode));els.continueBtn.addEventListener("click",continueGame);validateDecks();startCampaign();
 </script>
+
+<script id="v19-style-switcher">
+(function(){
+  const body=document.body;
+  const buttons=[...document.querySelectorAll(".style-btn")];
+  function applyStyle(style){
+    const allowed=["expedition","dark-retro","comp"];
+    if(!allowed.includes(style)) style="expedition";
+    body.dataset.style=style;
+    buttons.forEach(b=>b.classList.toggle("active",b.dataset.style===style));
+    try{localStorage.setItem("mammalMatrixStyle",style)}catch(e){}
+  }
+  buttons.forEach(b=>b.addEventListener("click",()=>applyStyle(b.dataset.style)));
+  let saved="expedition";
+  try{saved=localStorage.getItem("mammalMatrixStyle")||"expedition"}catch(e){}
+  applyStyle(saved);
+})();
+</script>
+
 </body>
 </html>
