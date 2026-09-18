@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Monotreme Door Maze — Corrected Perspective</title>
+<style>
+body{margin:0;padding:20px;background:#111;color:#eee8d7;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+#mono-persp-fix{max-width:820px;margin:auto;outline:none}
+#mono-persp-fix .shell{background:#171612;border:1px solid #5e584d;padding:10px}
+#mono-persp-fix .top{display:grid;grid-template-columns:1fr 160px;gap:8px;margin-bottom:8px}
+#mono-persp-fix .hud{display:flex;justify-content:space-between;gap:9px;flex-wrap:wrap;background:#29271f;border:1px solid #716b5d;padding:8px 10px;font-size:12px}
+#mono-persp-fix .mapbox{background:#0b0b0a;border:1px solid #716b5d;padding:4px}
+#mono-persp-fix .maptitle{text-align:center;font-size:9px;letter-spacing:.12em;color:#c6bea9;margin:2px 0 3px}
+#mono-persp-fix #pf-map{display:block;width:150px;height:94px;background:#050505;image-rendering:pixelated}
+#mono-persp-fix .scene{position:relative;aspect-ratio:16/9;overflow:hidden;border:2px solid #7a7364;background:#111}
+#mono-persp-fix .room-svg{display:block;width:100%;height:100%}
+#mono-persp-fix .wall-left,#mono-persp-fix .wall-right{fill:#5f5545}
+#mono-persp-fix .wall-back{fill:#786d58}
+#mono-persp-fix .ceiling{fill:#25252d}
+#mono-persp-fix .floor{fill:#382c1d}
+#mono-persp-fix .grid{stroke:rgba(238,228,200,.13);stroke-width:1;fill:none}
+#mono-persp-fix .door-shape{fill:#67452b;stroke:rgba(230,220,190,.55);stroke-width:3;cursor:pointer}
+#mono-persp-fix .door-shape.selected{stroke:#ead06e;stroke-width:5}
+#mono-persp-fix .door-shape.open{fill:#080807;stroke:#d6bb67}
+#mono-persp-fix .door-inner{fill:none;stroke:rgba(245,230,195,.18);stroke-width:1;pointer-events:none}
+#mono-persp-fix .knob{fill:#b7ab91;pointer-events:none}
+#mono-persp-fix .avatar{position:absolute;left:50%;bottom:8%;width:106px;height:76px;transform:translateX(-50%);transition:left .18s ease,bottom .18s ease,transform .18s ease;pointer-events:none}
+#mono-persp-fix .avatar svg{position:absolute;inset:0;width:100%;height:100%;display:none}
+#mono-persp-fix .avatar.walk-left{left:18%;bottom:35%;transform:translateX(-50%) scale(.42)}
+#mono-persp-fix .avatar.walk-center{left:50%;bottom:29%;transform:translateX(-50%) scale(.42)}
+#mono-persp-fix .avatar.walk-right{left:82%;bottom:35%;transform:translateX(-50%) scale(.42)}
+#mono-persp-fix .roomtag{position:absolute;left:9px;top:9px;background:rgba(7,7,6,.86);border:1px solid rgba(230,220,190,.34);padding:5px 8px;font-size:11px;letter-spacing:.08em}
+#mono-persp-fix .message{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:min(92%,570px);background:rgba(5,5,4,.91);border:1px solid #aaa18a;padding:6px 9px;text-align:center;font-size:11px}
+#mono-persp-fix .doors{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+#mono-persp-fix button{min-height:44px;border:1px solid #8d8574;background:#332f27;color:#f3eee0;font:inherit;padding:7px;cursor:pointer}
+#mono-persp-fix button:hover{background:#413c31}
+#mono-persp-fix button:focus-visible{outline:2px solid #e7cd69;outline-offset:2px}
+#mono-persp-fix .door-btn.selected{outline:2px solid #e7cd69;background:#443c2a}
+#mono-persp-fix .door-btn.open{background:#30402d}
+#mono-persp-fix .door-btn span,#mono-persp-fix .key{display:block;font-size:10px;color:#bdb39c;margin-top:2px}
+#mono-persp-fix .controls{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:7px}
+#mono-persp-fix .overlay,#mono-persp-fix .modal,#mono-persp-fix .end{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(4,4,4,.94);padding:14px;z-index:8}
+#mono-persp-fix .hidden,#mono-persp-fix .modal:not(.show),#mono-persp-fix .end:not(.show){display:none}
+#mono-persp-fix .card{width:min(540px,100%);background:#231f18;border:2px solid #958b75;padding:15px;text-align:center}
+#mono-persp-fix .card h2,#mono-persp-fix .card h3{margin:0 0 7px;color:#f0d273;letter-spacing:.1em}
+#mono-persp-fix .card h2{font-size:18px}#mono-persp-fix .card h3{font-size:13px}
+#mono-persp-fix .card p,#mono-persp-fix .question{font-family:Georgia,serif;color:#eee8da;line-height:1.42}
+#mono-persp-fix .question{font-size:16px;text-align:left;margin:8px 0 10px}
+#mono-persp-fix .answers{display:grid;gap:7px}.answers button{text-align:left}
+#mono-persp-fix .status{min-height:18px;margin-top:7px;font-size:11px;text-align:left}
+#mono-persp-fix .chars{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+#mono-persp-fix .charbtn{min-height:100px;background:#2c2922}
+#mono-persp-fix .charbtn strong{display:block;letter-spacing:.08em}
+#mono-persp-fix .end{background:radial-gradient(circle at 50% 42%,#765820,#2c2010 42%,#090806 82%)}
+@media(max-width:620px){#mono-persp-fix .top{grid-template-columns:1fr}#mono-persp-fix .mapbox{display:none}}
+@media(max-width:500px){#mono-persp-fix .doors{grid-template-columns:1fr}#mono-persp-fix .controls{grid-template-columns:repeat(2,1fr)}#mono-persp-fix .chars{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="mono-persp-fix" tabindex="0" aria-label="Monotreme trivia maze with corrected perspective">
+<div class="shell">
+ <div class="top">
+  <div class="hud"><span id="pf-progress">DOORS 0 / 8</span><span id="pf-lives">LIVES ■ ■ ■ ■ ■</span><span id="pf-depth">CHAMBER 01</span></div>
+  <div class="mapbox"><div class="maptitle">FOG MAP</div><canvas id="pf-map" width="150" height="94"></canvas></div>
+ </div>
+
+ <div class="scene">
+  <svg class="room-svg" viewBox="0 0 640 360" preserveAspectRatio="none" aria-hidden="true">
+   <polygon class="ceiling" points="0,0 640,0 460,82 180,82"/>
+   <polygon class="floor" points="0,360 640,360 460,278 180,278"/>
+   <polygon id="pf-left-wall" class="wall-left" points="0,0 180,82 180,278 0,360"/>
+   <polygon id="pf-back-wall" class="wall-back" points="180,82 460,82 460,278 180,278"/>
+   <polygon id="pf-right-wall" class="wall-right" points="460,82 640,0 640,360 460,278"/>
+   <path class="grid" d="M0 0 L320 180 M640 0 L320 180 M0 360 L320 180 M640 360 L320 180"/>
+   <path class="grid" d="M90 41 L320 180 M550 41 L320 180 M90 319 L320 180 M550 319 L320 180"/>
+
+   <g data-svgdoor="0">
+    <polygon class="door-shape" points="44,104 138,117 138,260 44,296"/>
+    <polygon class="door-inner" points="54,114 128,124 128,249 54,281"/>
+    <circle class="knob" cx="119" cy="190" r="5"/>
+   </g>
+   <g data-svgdoor="1">
+    <rect class="door-shape selected" x="262" y="112" width="116" height="166"/>
+    <rect class="door-inner" x="274" y="124" width="92" height="142"/>
+    <circle class="knob" cx="356" cy="194" r="5"/>
+   </g>
+   <g data-svgdoor="2">
+    <polygon class="door-shape" points="502,117 596,104 596,296 502,260"/>
+    <polygon class="door-inner" points="512,124 586,114 586,281 512,249"/>
+    <circle class="knob" cx="521" cy="190" r="5"/>
+   </g>
+  </svg>
+
+  <div class="avatar" id="pf-avatar">
+   <svg class="ech-front" viewBox="0 0 120 80"><g stroke-linecap="square"><g stroke="#b9a17d" stroke-width="4"><path d="M35 41 19 24M43 34 32 12M52 31 48 8M68 31 72 8M77 34 88 12M85 41 102 24"/></g><ellipse cx="60" cy="48" rx="30" ry="22" fill="#594638"/><ellipse cx="60" cy="49" rx="15" ry="17" fill="#725a47"/><path d="M52 47 60 65 68 47Z" fill="#91755d"/><circle cx="50" cy="42" r="2.4"/><circle cx="70" cy="42" r="2.4"/></g></svg>
+   <svg class="ech-side" viewBox="0 0 120 80"><g stroke-linecap="square"><g stroke="#b9a17d" stroke-width="4"><path d="M40 38 24 18M49 32 43 8M59 30 61 7M69 33 78 10M76 38 91 18M36 45 16 35"/></g><ellipse cx="55" cy="49" rx="31" ry="18" fill="#594638"/><ellipse cx="82" cy="51" rx="15" ry="12" fill="#725a47"/><path d="M94 47 116 52 94 58Z" fill="#91755d"/><circle cx="88" cy="46" r="2.4"/></g></svg>
+   <svg class="plat-front" viewBox="0 0 120 80"><ellipse cx="60" cy="50" rx="32" ry="18" fill="#574438"/><ellipse cx="60" cy="42" rx="18" ry="15" fill="#695145"/><ellipse cx="60" cy="55" rx="24" ry="10" fill="#92765d"/><circle cx="51" cy="40" r="2.4"/><circle cx="69" cy="40" r="2.4"/></svg>
+   <svg class="plat-side" viewBox="0 0 120 80"><ellipse cx="55" cy="50" rx="34" ry="16" fill="#574438"/><ellipse cx="82" cy="48" rx="15" ry="13" fill="#695145"/><ellipse cx="103" cy="51" rx="18" ry="8" fill="#92765d"/><ellipse cx="16" cy="53" rx="21" ry="10" transform="rotate(-12 16 53)" fill="#49382f"/><circle cx="87" cy="43" r="2.4"/></svg>
+  </div>
+
+  <div class="roomtag" id="pf-roomtag">ENTRY HALL</div>
+  <div class="message" id="pf-message">Choose a door. Answer correctly to unlock it.</div>
+
+  <div class="overlay" id="pf-select"><div class="card"><h2>CHOOSE YOUR EXPLORER</h2><p>Select a monotreme to enter the archive.</p><div class="chars"><button type="button" class="charbtn" data-char="echidna"><strong>ECHIDNA</strong></button><button type="button" class="charbtn" data-char="platypus"><strong>PLATYPUS</strong></button></div></div></div>
+  <div class="modal" id="pf-modal"><div class="card"><h3 id="pf-title">LOCKED DOOR</h3><div class="question" id="pf-question"></div><div class="answers" id="pf-answers"></div><div class="status" id="pf-status"></div></div></div>
+  <div class="end" id="pf-end"><div class="card"><h2>GENERALIA INNER ARCHIVE</h2><p>Your explorer opened every trivia gate.</p><button type="button" id="pf-again">CHOOSE AGAIN</button></div></div>
+ </div>
+
+ <div class="doors"><button type="button" class="door-btn" data-door="0">LEFT DOOR<span>side passage</span></button><button type="button" class="door-btn selected" data-door="1">CENTER DOOR<span>straight ahead</span></button><button type="button" class="door-btn" data-door="2">RIGHT DOOR<span>side passage</span></button></div>
+ <div class="controls"><button type="button" id="pf-turn-left">SELECT LEFT<span class="key">A / ←</span></button><button type="button" id="pf-enter">TRY / ENTER<span class="key">W / ↑</span></button><button type="button" id="pf-turn-right">SELECT RIGHT<span class="key">D / →</span></button><button type="button" id="pf-reset">RESTART<span class="key">R</span></button></div>
+</div>
+</div>
+<script>
+(()=> {
+const R=document.getElementById('mono-persp-fix'),$=s=>R.querySelector(s),$$=s=>[...R.querySelectorAll(s)];
+const map=$('#pf-map'),mc=map.getContext('2d'),avatar=$('#pf-avatar'),modal=$('#pf-modal'),select=$('#pf-select'),end=$('#pf-end');
+
+const Q=[
+['Which living mammal group includes the platypus and echidnas?',['Monotremes','Marsupials','Rodents','Primates'],'Monotremes'],
+['What unusual reproductive trait do living monotremes share?',['They lay eggs','They give birth to litters','They reproduce by budding','They have no parental care'],'They lay eggs'],
+['Which monotreme has a broad flattened bill used while hunting underwater?',['Platypus','Short-beaked echidna','Long-beaked echidna','Wombat'],'Platypus'],
+['What sense helps platypuses detect weak electrical signals from prey?',['Electroreception','Echolocation','Ultraviolet vision','Infrared vision'],'Electroreception'],
+['Where are many platypus electroreceptors concentrated?',['The bill','The tail','The hind feet','The back'],'The bill'],
+['Which monotremes have prominent defensive spines?',['Echidnas','Platypuses','Bandicoots','Possums'],'Echidnas'],
+['Living monotremes occur naturally in which broad region?',['Australia and New Guinea','North America','Europe','South America'],'Australia and New Guinea'],
+['Which trait helps identify monotremes as mammals despite egg laying?',['Hair and milk production','Feathers','Gills','External shells'],'Hair and milk production']
+];
+
+const T=[
+['ENTRY HALL','#786d58','#5f5545','#382c1d','#25252d','#67452b'],
+['RED BRICK RECORDS','#913b31','#71332b','#674226','#99968e','#47291d'],
+['MOSS CONSERVATORY','#506948','#3e553a','#2c2a1c','#243027','#493d27'],
+['BLUE SPECIMEN VAULT','#395673','#2b465e','#252933','#192632','#273f57'],
+['BONE GALLERY','#a69a7c','#81775f','#44392c','#383229','#5d4733'],
+['AMBER CABINET','#8c602b','#6f4d25','#402b18','#342416','#60411f'],
+['RIVER LABORATORY','#386f72','#2d595b','#263638','#1c292b','#305c60'],
+['NATURALIST LIBRARY','#684731','#523826','#35251c','#29201a','#55341f'],
+['INNER ARCHIVE','#72542d','#584020','#231b12','#302516','#805b28']
+];
+
+let stage=0,lives=5,sel=1,open=null,path=[],char='echidna',busy=false,room=0;
+
+const shuffle=a=>{
+  a=[...a];
+  for(let i=a.length-1;i;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+};
+
+function pose(){
+  avatar.className='avatar';
+  $$('#pf-avatar svg').forEach(s=>s.style.display='none');
+  const front=avatar.querySelector(char==='echidna'?'.ech-front':'.plat-front');
+  const side=avatar.querySelector(char==='echidna'?'.ech-side':'.plat-side');
+  if(sel===1){
+    front.style.display='block';
+    avatar.style.transform='translateX(-50%)';
+  }else{
+    side.style.display='block';
+    avatar.style.transform=sel===0?'translateX(-50%) scaleX(-1)':'translateX(-50%) scaleX(1)';
+  }
+}
+
+function paint(){
+  const t=T[room];
+  $('#pf-back-wall').style.fill=t[1];
+  $('#pf-left-wall').style.fill=t[2];
+  $('#pf-right-wall').style.fill=t[2];
+  $('.floor').style.fill=t[3];
+  $('.ceiling').style.fill=t[4];
+  $$('.door-shape').forEach((d,i)=>{
+    d.style.fill=i===open?'#080807':t[5];
+    d.classList.toggle('selected',i===sel);
+    d.classList.toggle('open',i===open);
+  });
+  $('#pf-roomtag').textContent=t[0];
+}
+
+function drawMap(){
+  mc.fillStyle='#050505';mc.fillRect(0,0,150,94);
+  let x=75,y=84,pts=[[x,y]];
+  path.forEach(p=>{x+=p===0?-18:p===2?18:0;y-=10;pts.push([x,y])});
+  const c=pts[pts.length-1];
+  mc.strokeStyle='#25231f';
+  [-18,0,18].forEach(dx=>{mc.beginPath();mc.moveTo(c[0],c[1]);mc.lineTo(c[0]+dx,c[1]-10);mc.stroke()});
+  mc.strokeStyle='#77705f';mc.lineWidth=2;mc.beginPath();
+  pts.forEach((p,i)=>i?mc.lineTo(...p):mc.moveTo(...p));
+  mc.stroke();
+  pts.forEach((p,i)=>{mc.fillStyle=i===pts.length-1?'#efd06a':'#aaa18b';mc.fillRect(p[0]-3,p[1]-3,6,6)});
+}
+
+function update(){
+  $('#pf-progress').textContent=`DOORS ${stage} / ${Q.length}`;
+  $('#pf-lives').textContent='LIVES '+Array.from({length:5},(_,i)=>i<lives?'■':'□').join(' ');
+  $('#pf-depth').textContent='CHAMBER '+String(stage+1).padStart(2,'0');
+  $$('.door-btn').forEach((b,i)=>{
+    b.classList.toggle('selected',i===sel);
+    b.classList.toggle('open',i===open);
+  });
+  pose();paint();drawMap();
+}
+
+function choose(i){
+  if(busy||modal.classList.contains('show'))return;
+  sel=i;update();
+  $('#pf-message').textContent=open===sel?'Door open — enter it.':'Selected '+['left','center','right'][sel]+' door.';
+}
+
+function shift(d){choose((sel+d+3)%3)}
+
+function tryDoor(){
+  if(busy||modal.classList.contains('show')||!select.classList.contains('hidden'))return;
+  if(open===sel){walk();return}
+  if(open!==null){$('#pf-message').textContent='Enter the door you already unlocked.';return}
+  const q=Q[stage];
+  $('#pf-title').textContent=['LEFT','CENTER','RIGHT'][sel]+' DOOR — LOCKED';
+  $('#pf-question').textContent=q[0];
+  const box=$('#pf-answers');
+  box.innerHTML='';
+  $('#pf-status').textContent='';
+  shuffle(q[1]).forEach(a=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.textContent=a;
+    b.addEventListener('click',()=>answer(a,q));
+    box.appendChild(b);
+  });
+  modal.classList.add('show');
+}
+
+function answer(a,q){
+  if(a===q[2]){
+    open=sel;stage++;
+    $('#pf-status').textContent='CORRECT — DOOR UNLOCKED';
+    update();
+    setTimeout(()=>{
+      modal.classList.remove('show');
+      $('#pf-message').textContent='The door is open. Enter it.';
+    },220);
+  }else{
+    lives--;
+    update();
+    $('#pf-status').textContent='INCORRECT — LIFE LOST';
+  }
+}
+
+function walk(){
+  busy=true;
+  avatar.classList.add(sel===0?'walk-left':sel===2?'walk-right':'walk-center');
+  setTimeout(()=>{
+    path.push(open);
+    if(stage>=Q.length){
+      room=8;avatar.className='avatar';update();end.classList.add('show');busy=false;return;
+    }
+    room=1+((stage*2+open*3)%7);
+    open=null;sel=1;avatar.className='avatar';busy=false;
+    $('#pf-message').textContent='New chamber discovered. Choose the next door.';
+    update();
+  },210);
+}
+
+function reset(){
+  stage=0;lives=5;sel=1;open=null;path=[];room=0;busy=false;avatar.className='avatar';
+  modal.classList.remove('show');end.classList.remove('show');
+  $('#pf-message').textContent='Choose a door. Answer correctly to unlock it.';
+  update();
+}
+
+$$('.charbtn').forEach(b=>b.addEventListener('click',()=>{
+  char=b.dataset.char;
+  select.classList.add('hidden');
+  reset();
+}));
+
+$$('[data-svgdoor],.door-btn').forEach(b=>b.addEventListener('click',()=>{
+  const i=Number(b.dataset.svgdoor??b.dataset.door);
+  sel===i?tryDoor():choose(i);
+}));
+
+$('#pf-turn-left').addEventListener('click',()=>shift(-1));
+$('#pf-turn-right').addEventListener('click',()=>shift(1));
+$('#pf-enter').addEventListener('click',tryDoor);
+$('#pf-reset').addEventListener('click',()=>{reset();select.classList.remove('hidden')});
+$('#pf-again').addEventListener('click',()=>{reset();select.classList.remove('hidden')});
+
+reset();
+select.classList.remove('hidden');
+})();
+</script>
+</body>
+</html>
