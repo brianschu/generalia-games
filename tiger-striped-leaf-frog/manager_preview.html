@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generalia | Leaf Frog Map Preview</title>
+<style>
+:root{color-scheme:light;--paper:#e4e5de;--ink:#283627;--muted:#667263;--line:#c6c9bb;--white:#f9f8f2;--accent:#e600b8}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{background:var(--paper);color:var(--ink);font:14px Arial,sans-serif;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:center;padding:10px 18px;border-bottom:1px solid var(--line);background:#eeefe9}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}button{appearance:none;border:1px solid var(--line);border-radius:5px;padding:10px 14px;background:var(--white);color:var(--ink);font-size:12px;text-align:left;cursor:pointer;min-width:172px}button[aria-pressed="true"]{border-color:#59664f;box-shadow:inset 0 -2px 0 var(--accent);background:white}button strong{display:block;font-size:12px;font-weight:600}button span{display:block;margin-top:4px;font-size:10px;color:var(--muted)}
+main{flex:1;min-height:0;padding:14px 18px 18px}.viewer{height:100%;min-height:420px;border:1px solid #aeb4a7;border-radius:5px;overflow:hidden;background:#111}iframe{display:block;width:100%;height:100%;border:0}
+@media(max-width:720px){header{padding:10px 12px}nav{justify-content:center;width:100%}button{min-width:0;flex:1}main{padding:10px}.viewer{min-height:360px}}
+</style>
+</head>
+<body>
+<header>
+  <nav aria-label="Map versions">
+    <button type="button" data-src="index.html" data-title="Current atlas" aria-pressed="true"><strong>Current map</strong></button>
+    <button type="button" data-src="tiger_striped_leaf_frog_bathymetry_mockup.html" data-title="Bathymetry mockup" aria-pressed="false"><strong>Bathymetry test</strong></button>
+  </nav>
+</header>
+<main><div class="viewer"><iframe id="map" title="Current atlas preview" src="index.html" allow="fullscreen"></iframe></div></main>
+<script>
+const frame=document.getElementById('map');
+for(const button of document.querySelectorAll('nav button'))button.addEventListener('click',()=>{
+  if(button.getAttribute('aria-pressed')==='true')return;
+  for(const other of document.querySelectorAll('nav button'))other.setAttribute('aria-pressed',String(other===button));
+  frame.title=button.dataset.title+' preview';
+  frame.src=button.dataset.src;
+});
+</script>
+</body>
+</html>
